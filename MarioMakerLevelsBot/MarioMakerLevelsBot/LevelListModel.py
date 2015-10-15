@@ -83,7 +83,7 @@ class LevelListModel(QtCore.QAbstractItemModel):
             elif(section == 2):
                 return "User"
             elif(section == 3):
-                return "Priviledges"
+                return "Privileges"
 
     def flags(self, index):
         """Return the Qt flags for the index."""
