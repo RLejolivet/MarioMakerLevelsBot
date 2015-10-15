@@ -35,16 +35,6 @@ class LevelListModel(QtCore.QAbstractTableModel):
         """Return the number of rows in the model."""
         return len(self.levels_list)
 
-    def index(self, row, column, parent=QModelIndex()):
-        """Return an index for the item in the position designed by row and column.
-        If the item does not exist, return QModelIndex()."""
-        if(row < 0 or column < 0 or
-           row >= len(self.levels_list) or column > 4 or
-           parent != QModelIndex()):
-            return QModelIndex()
-
-        return self.createIndex(row, column, self.levels_list[row])
-
     def data(self, index, role=Qt.DisplayRole):
         """Return the data for the index, given the corresponding role."""
         if(not self._is_valid_index(index)):
@@ -84,10 +74,6 @@ class LevelListModel(QtCore.QAbstractTableModel):
                 return "User"
             elif(section == 3):
                 return "Privileges"
-
-    def flags(self, index):
-        """Return the Qt flags for the index."""
-        return Qt.ItemIsSelectable
 
     #def sort(column, order=Qt.AscendingOrder):
     #    """Sort the indexes by column, in order."""
