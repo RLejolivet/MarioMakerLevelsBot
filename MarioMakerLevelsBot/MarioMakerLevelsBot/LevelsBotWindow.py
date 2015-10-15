@@ -1,4 +1,4 @@
-﻿from PySide import QtGui
+﻿from PySide import QtCore, QtGui
 from ui.window import Ui_MainWindow
 
 import LevelListModel
@@ -21,3 +21,4 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.level_list_model.add_level("78CD-0000-AD95-FFFF", "ASubbedMod", {"subscriber": True, "user-level": 1})
 
         self.levels_tableView.setModel(self.level_list_model)
+        self.levels_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
