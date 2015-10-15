@@ -13,7 +13,7 @@ class Level(object):
         self.name = name
         self.tags = tags
 
-class LevelListModel(QtCore.QAbstractItemModel):
+class LevelListModel(QtCore.QAbstractTableModel):
     """The Qt model for the levels list"""
 
     def __init__(self, parent=None):
