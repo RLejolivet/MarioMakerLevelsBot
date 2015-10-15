@@ -22,7 +22,18 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LevelsBotWindow.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MarioMakerLevelsBot.py" />
+    <Compile Include="ui\window.py" />
+    <Compile Include="ui\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ui\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ui\window.ui" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
