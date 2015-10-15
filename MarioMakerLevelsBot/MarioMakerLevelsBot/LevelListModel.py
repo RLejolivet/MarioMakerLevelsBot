@@ -1,4 +1,6 @@
-﻿from PySide import QtCore
+﻿import datetime
+
+from PySide import QtCore
 from PySide.QtCore import QModelIndex
 from PySide.QtCore import Qt
 
@@ -17,6 +19,7 @@ class LevelListModel(QtCore.QAbstractItemModel):
     def __init__(self, parent=None):
         """Initialize the model.
         Loading the levels from a file?"""
+        super().__init__(parent)
         self.levels_list = []
 
     ###########################################################################
@@ -30,13 +33,13 @@ class LevelListModel(QtCore.QAbstractItemModel):
 
     def rowCount(self, parent=QModelIndex()):
         """Return the number of rows in the model."""
-        return self.levels_list.count
+        return len(self.levels_list)
 
     def index(self, row, column, parent=QModelIndex()):
         """Return an index for the item in the position designed by row and column.
         If the item does not exist, return QModelIndex()."""
         if(row < 0 or column < 0 or
-           row >= self.levels_list.count or column > 4 or
+           row >= len(self.levels_list) or column > 4 or
            parent != QModelIndex()):
             return QModelIndex()
 
@@ -44,7 +47,7 @@ class LevelListModel(QtCore.QAbstractItemModel):
 
     def data(self, index, role=Qt.DisplayRole):
         """Return the data for the index, given the corresponding role."""
-        if(not _is_valid_index(index)):
+        if(not self._is_valid_index(index)):
             return None
 
         if(role == Qt.DisplayRole):
@@ -72,7 +75,7 @@ class LevelListModel(QtCore.QAbstractItemModel):
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         """Return the data for the row and column headers."""
-        if(orientation == Qt.Vertical and role == Qt.DisplayRole):
+        if(orientation == Qt.Horizontal and role == Qt.DisplayRole):
             if(section == 0):
                 return "#"
             elif(section == 1):
@@ -108,5 +111,5 @@ class LevelListModel(QtCore.QAbstractItemModel):
         row = index.row()
         column = index.column()
         return not (row < 0 or column < 0 or
-                    row >= self.levels_list.count or column > 4 or
-                    parent == QModelIndex())
+                    row >= len(self.levels_list) or column > 4 or
+                    index == QModelIndex())
