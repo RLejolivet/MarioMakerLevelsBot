@@ -77,7 +77,7 @@ class ChatListener(object):
 
 
     def _connect(self):
-        """Create the connexion with Twitch chat server (socket) and initialize the IRC protocol
+        """Create the connection with Twitch chat server (socket) and initialize the IRC protocol
         """
         try:
             self.socket.close() # closing old socket if it exists
@@ -94,14 +94,14 @@ class ChatListener(object):
                     self.parent,
                     "Unable to connect to Twitch chat",
                     "Unable to connect to Twitch chat\n"
-                    "Make sure your internet connexion doesn't restrict IRC."""
+                    "Make sure your internet connection doesn't restrict IRC."""
                     )
             print("Unable to connect")
             return False
         except OSError as e:
             if(e.winerror == 10056): # Already connected
                 return True
-            elif(e.winerror == 10053): # Connexion aborted, may be due to existing connexion
+            elif(e.winerror == 10053): # Connection aborted, may be due to existing connection
                 return False
 
         # Sending password (Twitch oauth) first
@@ -115,7 +115,7 @@ class ChatListener(object):
         self.socket.send("CAP REQ :twitch.tv/tags\r\n".encode())
 
         # Joining the channel.
-        self.socket.send("JOIN #{0}\r\n".format(channel.lower().replace("#", "")).encode())
+        self.socket.send("JOIN #{0}\r\n".format(self.channel.lower().replace("#", "")).encode())
 
         return True
 
@@ -140,7 +140,7 @@ class ChatListener(object):
                     break # Getting out of the loop stops the thread
 
             if(readbuffer == ""): # Didn't receive anything, connection may be closed
-                time.sleep(1) # Waiting a second not to flood with reconnexions
+                time.sleep(1) # Waiting a second not to flood with reconnections
                 self._connect()
                 continue
 
