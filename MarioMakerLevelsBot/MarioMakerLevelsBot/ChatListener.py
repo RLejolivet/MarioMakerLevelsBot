@@ -132,7 +132,7 @@ class ChatListener(object):
         while(True): # Eternal loop to listen the messages
 
             try: # Receiving data from IRC
-                readbuffer = readbuffer + self.recv(1024).decode()
+                readbuffer = readbuffer + self.socket.recv(1024).decode()
             except: # Error while reading the socket, try reconnecting
                 if(self._connect()): # Reconnecting worked
                     continue
