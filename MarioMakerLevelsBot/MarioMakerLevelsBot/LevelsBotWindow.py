@@ -35,18 +35,17 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
                     self)
                 self.chat_listener.start()
 
-            self.chat_listener.add_callback(self.parse_messages)
+            self.chat_listener.add_callback(self.parse_message)
 
         else:
             if(self.chat_listener is not None):
-                self.chat_listener.remove_callback(self.parse_messages)
+                self.chat_listener.remove_callback(self.parse_message)
 
-    code_re = re.compile("[0-9A-F]{4}[ -_][0-9A-F]{4}[ -_][0-9A-F]{4}[ -_][0-9A-F]{4}")
+    code_re = re.compile("[0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}")
 
     def parse_message(self, channel, name, tags, message):
         """Parse a message read from chat. This is the callback for the ChatListener.
         """
-
         s = self.code_re.search(message)
 
         if(s is None):
