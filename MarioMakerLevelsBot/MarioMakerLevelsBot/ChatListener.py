@@ -77,6 +77,8 @@ class ChatListener(object):
 
 
     def _connect(self):
+        """Create the connexion with Twitch chat server (socket) and initialize the IRC protocol
+        """
         try:
             self.socket.close() # closing old socket if it exists
         except:
@@ -118,6 +120,9 @@ class ChatListener(object):
         return True
 
     def _main(self):
+        """Main loop of the listener : connects to the chat and reads
+        everything sent by the server.
+        """
 
         if(not self._connect()): # Connection to the Twitch server failed
             return
