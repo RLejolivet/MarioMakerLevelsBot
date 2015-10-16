@@ -175,4 +175,4 @@ class ChatListener(object):
                 # IRC checks connectiond with ping.
                 # Every ping has to be replied to with a Pong.
                 elif(line[0] == "PING"):
-                    s.send("PONG {0}\r\n".format(line[1]).encode())
+                    self.socket.send("PONG {0}\r\n".format(line[1]).encode())
