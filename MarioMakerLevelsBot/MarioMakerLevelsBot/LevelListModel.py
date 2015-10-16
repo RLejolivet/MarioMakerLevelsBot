@@ -1,4 +1,5 @@
 ﻿import datetime
+import threading
 
 from PySide import QtCore
 from PySide.QtCore import QModelIndex
@@ -21,6 +22,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
         Loading the levels from a file?"""
         super().__init__(parent)
         self.levels_list = []
+        self.list_lock = threading.Lock()
 
     ###########################################################################
     # Qt methods.
@@ -86,7 +88,14 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
     def add_level(self, code, name, tags=None):
         """Add a new level to the list if it isn't already in."""
+
+        self.list_lock.acquire()
+
+        self.beginInsertRows(QModelIndex(), len(levels_list), len(levels_list))
         self.levels_list.append(Level(datetime.datetime.now(), code, name, tags))
+        self.endInsertRows()
+
+        self.list_lock.release()
 
     ###########################################################################
     # Private methods
