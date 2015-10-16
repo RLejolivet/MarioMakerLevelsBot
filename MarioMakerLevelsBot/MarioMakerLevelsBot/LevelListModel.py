@@ -55,11 +55,11 @@ class LevelListModel(QtCore.QAbstractTableModel):
                 tags = self.levels_list[row].tags
                 if(tags is None):
                     return ""
-                elif(tags['subscriber'] and tags['user-level']): # tags['user-level'] > 0
+                elif(tags.get('subscriber', False) and tags.get('user-type', 0)): # tags['user-type'] > 0
                     return "Sub and Mod"
-                elif(tags['subscriber']):
+                elif(tags.get('subscriber', False)):
                     return "Sub"
-                elif(tags['user-level']): # tags['user-level'] > 0
+                elif(tags.get('user-type')): # tags['user-type'] > 0
                     return "Mod"
                 else:
                     return ""
