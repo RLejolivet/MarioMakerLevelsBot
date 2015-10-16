@@ -89,6 +89,9 @@ class LevelListModel(QtCore.QAbstractTableModel):
     def add_level(self, code, name, tags=None):
         """Add a new level to the list if it isn't already in."""
 
+        if(tags is not None):
+            name = tags.get("display-name", name)
+
         self.list_lock.acquire()
 
         self.beginInsertRows(QModelIndex(), len(self.levels_list), len(self.levels_list))
