@@ -46,7 +46,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
     def parse_message(self, channel, name, tags, message):
         """Parse a message read from chat. This is the callback for the ChatListener.
         """
-        s = self.code_re.search(message)
+        s = self.code_re.search(message.upper())
 
         if(s is None):
             return
