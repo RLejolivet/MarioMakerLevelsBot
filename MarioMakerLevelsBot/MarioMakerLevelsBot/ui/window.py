@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Fri Oct 16 00:51:35 2015
+# Created: Fri Oct 16 19:48:16 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -58,6 +58,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.toolButton)
         self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.widget_2)
         self.twitch_oauth_lineedit = QtGui.QLineEdit(self.groupBox)
+        self.twitch_oauth_lineedit.setEchoMode(QtGui.QLineEdit.Password)
         self.twitch_oauth_lineedit.setObjectName("twitch_oauth_lineedit")
         self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.twitch_oauth_lineedit)
         self.verticalLayout_2.addWidget(self.groupBox)
