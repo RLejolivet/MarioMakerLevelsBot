@@ -91,7 +91,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
         self.list_lock.acquire()
 
-        self.beginInsertRows(QModelIndex(), len(levels_list), len(levels_list))
+        self.beginInsertRows(QModelIndex(), len(self.levels_list), len(self.levels_list))
         self.levels_list.append(Level(datetime.datetime.now(), code, name, tags))
         self.endInsertRows()
 
