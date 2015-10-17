@@ -90,7 +90,9 @@ class LevelListModel(QtCore.QAbstractTableModel):
         """Add a new level to the list if it isn't already in."""
 
         if(tags is not None):
-            name = tags.get("display-name", name)
+            display_name = tags.get("display-name", "")
+            if(display_name != ""):
+                name = display_name
 
         self.list_lock.acquire()
 
