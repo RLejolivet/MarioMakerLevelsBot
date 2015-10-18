@@ -27,6 +27,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         # IRC info tab
 
         self.chat_listener = None
+        self.oauth_help_button.clicked.connect(self.oauth_help)
         self.connect_button.clicked.connect(self.connect)
 
         # Levels list tab
@@ -62,6 +63,23 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
     ###########################################################################
     # IRC info tab
     ###########################################################################
+
+    def oauth_help(self):
+        """Display a messagebox with some information about the required OAuth.
+        """
+        QtGui.QMessageBox.about(
+            self,
+            "OAuth help",
+            "This is the OAuth of your bot account, to connect to Twitch\n"
+            "To obtain it:\n"
+            "    - Log on the bot account on Twitch\n"
+            "    - Go to http://twitchapps.com/tmi/\n"
+            "    - Connect with Twitch\n"
+            "    - Accept\n"
+            "    - Copy and paste the OAuth given in the box\n"
+            "\n"
+            "More information can be found at http://help.twitch.tv/customer/portal/articles/1302780-twitch-irc\n"
+        )
 
     def connect(self):
         if(self.chat_listener is None):

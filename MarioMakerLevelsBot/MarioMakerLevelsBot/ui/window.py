@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Sun Oct 18 18:26:27 2015
+# Created: Sun Oct 18 21:21:41 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -53,9 +53,9 @@ class Ui_MainWindow(object):
         self.label_3 = QtGui.QLabel(self.widget_2)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
-        self.toolButton = QtGui.QToolButton(self.widget_2)
-        self.toolButton.setObjectName("toolButton")
-        self.horizontalLayout_2.addWidget(self.toolButton)
+        self.oauth_help_button = QtGui.QToolButton(self.widget_2)
+        self.oauth_help_button.setObjectName("oauth_help_button")
+        self.horizontalLayout_2.addWidget(self.oauth_help_button)
         self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.widget_2)
         self.twitch_oauth_lineedit = QtGui.QLineEdit(self.groupBox)
         self.twitch_oauth_lineedit.setEchoMode(QtGui.QLineEdit.Password)
@@ -218,7 +218,7 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Twitch account to connect to chat", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Name", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Oauth", None, QtGui.QApplication.UnicodeUTF8))
-        self.toolButton.setText(QtGui.QApplication.translate("MainWindow", "?", None, QtGui.QApplication.UnicodeUTF8))
+        self.oauth_help_button.setText(QtGui.QApplication.translate("MainWindow", "?", None, QtGui.QApplication.UnicodeUTF8))
         self.connect_button.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.irc_info_tab), QtGui.QApplication.translate("MainWindow", "Twich chat info", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("MainWindow", "Controls", None, QtGui.QApplication.UnicodeUTF8))

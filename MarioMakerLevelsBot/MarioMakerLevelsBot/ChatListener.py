@@ -169,7 +169,6 @@ class ChatListener(QtCore.QObject):
                     self.connection_successful.emit(line[4][1:])
                     continue
 
-
                 # Checks if it's a login unsuccessful message
                 elif (len(line) >= 5 and
                       line[3] == ":Login" and
