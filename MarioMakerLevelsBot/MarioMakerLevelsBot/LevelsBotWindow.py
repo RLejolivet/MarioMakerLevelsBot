@@ -82,6 +82,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         )
 
     def connect(self):
+        """Create a ChatListener and connect it to Twitch chat to start receiving messages.
+        """
         if(self.chat_listener is None):
             self.chat_listener = ChatListener.ChatListener(
                 self.twitch_name_lineedit.text(),
@@ -96,6 +98,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             self.chat_listener.start()
 
     def wrong_password_slot(self):
+        """Slot connected to the "wrong password" signal that may be emitted by the ChatListener.
+        """
         QtGui.QMessageBox.information(
             self,
             "Unable to connect to Twitch chat",
@@ -104,6 +108,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             )
 
     def connection_failed_slot(self):
+        """Slot connected to the "connection failed signal that may be emitted by the ChatListener."
+        """
         QtGui.QMessageBox.information(
             self,
             "Unable to connect to Twitch chat",
@@ -112,6 +118,11 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             )
 
     def connection_successful_slot(self, channel):
+        """Slot connected to the "connection successful that may be emitted by the ChatListener.
+        
+        Display a message confirming the connection as status bar not to force an extra click,
+        and save the information for later.
+        """
         self.statusbar.showMessage("Successfully connected to channel {}".format(channel))
         self.settings.setValue("irc_info/channel", self.channel_lineedit.text())
         self.settings.setValue("irc_info/nick", self.twitch_name_lineedit.text())
@@ -140,6 +151,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             if(self.chat_listener is not None):
                 self.chat_listener.remove_callback(self.parse_message)
 
+    # RegExp used to find codes. Pre-compiled to go faster when receiving messages.
     code_re = re.compile("[0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}")
 
     def parse_message(self, channel, name, tags, message):
