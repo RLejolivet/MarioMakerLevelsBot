@@ -15,13 +15,23 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         super().__init__(None)
         self.setupUi(self)
 
+        # IRC info tab
+
+        self.chat_listener = None
+        self.connect_button.clicked.connect(self.connect)
+
+        # Levels list tab
+
         self.level_list_model = LevelListModel.LevelListModel()
         self.levels_tableView.setModel(self.level_list_model)
         self.levels_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
-        self.chat_listener = None
-        self.connect_button.clicked.connect(self.connect)
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
+
+
+    ###########################################################################
+    # IRC Info tab
+    ###########################################################################
 
     def connect(self):
         if(self.chat_listener is None):
@@ -30,7 +40,31 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
                 self.twitch_oauth_lineedit.text(),
                 self.channel_lineedit.text(),
                 self)
+
+            self.chat_listener.wrong_password.connect(self.wrong_password_slot)
+            self.chat_listener.connection_failed.connect(self.connection_failed_slot)
+
             self.chat_listener.start()
+
+    def wrong_password_slot(self):
+        QtGui.QMessageBox.information(
+            self,
+            "Unable to connect to Twitch chat",
+            "Unable to connect to Twitch chat\n"
+            "Invalid Name/Password (OAuth) combination."""
+            )
+
+    def connection_failed_slot(self):
+        QtGui.QMessageBox.information(
+            self,
+            "Unable to connect to Twitch chat",
+            "Unable to connect to Twitch chat\n"
+            "Make sure your internet connection doesn't restrict IRC."
+            )
+
+    ###########################################################################
+    # IRC Info tab
+    ###########################################################################
 
     def toggle_check_codes(self, checked):
         """Slot receiving information about if chat should be parsed or not.

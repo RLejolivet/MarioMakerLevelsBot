@@ -2,11 +2,11 @@
 import socket
 import threading
 
-from PySide import QtGui
+from PySide import QtCore
 
 import TwitchTags
 
-class ChatListener(object):
+class ChatListener(QtCore.QObject):
     """Connects to a Twitch chat channel and listens to the messages.
     Sends the data to callbacks.
 
@@ -16,11 +16,13 @@ class ChatListener(object):
     HOST = "irc.twitch.tv" # standard Twitch chat server address
     PORT = 6667 # standard Twitch chat server port
 
+    wrong_password = QtCore.Signal()
+    connection_failed = QtCore.Signal()
+
     def __init__(self, name, oauth, channel, parent=None):
         """Create the ChatListener object.
-
-        parent must be 
         """
+        super().__init__()
         self.name = name
         self.oauth = oauth
         self.channel = channel
@@ -89,13 +91,7 @@ class ChatListener(object):
         try:
             self.socket.connect((self.HOST, self.PORT))
         except ConnectionAbortedError:
-            if(self.parent is not None):
-                QtGui.QMessageBox.information(
-                    self.parent,
-                    "Unable to connect to Twitch chat",
-                    "Unable to connect to Twitch chat\n"
-                    "Make sure your internet connection doesn't restrict IRC."
-                    )
+            self.wrong_password.emit()
             return False
         except OSError as e:
             if(e.winerror == 10056): # Already connected
@@ -109,6 +105,13 @@ class ChatListener(object):
         self.socket.send("NICK {0}\r\n".format(self.name.lower()).encode())
         self.socket.send("USER {0} {1} bla :{2}\r\n".format(
             self.name, self.HOST, self.name + " Bot").encode())
+
+        readbuffer = self.socket.recv(1024).decode()
+        print(readbuffer)
+
+        if(readbuffer == ""): # Couldn't read anything, connection closed (empty pass?)
+            self.wrong_password.emit()
+            return False
 
         # Requesting tags
         self.socket.send("CAP REQ :twitch.tv/tags\r\n".encode())
@@ -162,12 +165,7 @@ class ChatListener(object):
                 elif (len(line) >= 5 and
                         line[3] == ":Login" and
                         line[4] == "unsuccessful"):
-                    QtGui.QMessageBox.information(
-                        self.parent,
-                        "Unable to connect to Twitch chat",
-                        "Unable to connect to Twitch chat\n"
-                        "Invalid Name/Password (OAuth) combination."""
-                        )
+                    self.wrong_password.emit()
                     break
 
                 # IRC checks connectiond with ping.
