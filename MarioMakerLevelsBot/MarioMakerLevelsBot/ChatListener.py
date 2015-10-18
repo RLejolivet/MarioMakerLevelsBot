@@ -94,7 +94,7 @@ class ChatListener(object):
                     self.parent,
                     "Unable to connect to Twitch chat",
                     "Unable to connect to Twitch chat\n"
-                    "Make sure your internet connection doesn't restrict IRC."""
+                    "Make sure your internet connection doesn't restrict IRC."
                     )
             print("Unable to connect")
             return False

@@ -22,12 +22,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.chat_listener = None
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
 
-    def toggle_check_codes(self, checked):
-        """Slot receiving information about if chat should be parsed or not.
-        """
-        if(checked):
-            
-            if(self.chat_listener is None):
+    def connect(self):
+        if(self.chat_listener is None):
                 self.chat_listener = ChatListener.ChatListener(
                     self.twitch_name_lineedit.text(),
                     self.twitch_oauth_lineedit.text(),
@@ -35,7 +31,20 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
                     self)
                 self.chat_listener.start()
 
-            self.chat_listener.add_callback(self.parse_message)
+    def toggle_check_codes(self, checked):
+        """Slot receiving information about if chat should be parsed or not.
+        """
+        if(checked):
+            if(self.chat_listener is not None):
+                self.chat_listener.add_callback(self.parse_message)
+            else:
+                QtGui.QMessageBox(
+                    self,
+                    "Not connected to Twitch chat",
+                    "The bot is currently not connected to Twitch chat.\n"
+                    "Head to the Twitch chat info tab to connect."
+                    )
+                self.find_codes_checkbox.setChecked(False)
 
         else:
             if(self.chat_listener is not None):
