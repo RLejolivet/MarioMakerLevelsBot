@@ -16,7 +16,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.setupUi(self)
 
         # Settings
-        self.settings = QtCore.QSettings("settings", QtCore.QSettings.IniFormat, self)
+        self.settings = QtCore.QSettings("settings.ini", QtCore.QSettings.IniFormat, self)
         self.channel_lineedit.setText(self.settings.value("irc_info/channel", ""))
         self.twitch_name_lineedit.setText(self.settings.value("irc_info/nick", ""))
         self.twitch_oauth_lineedit.setText(self.settings.value("irc_info/oauth", ""))

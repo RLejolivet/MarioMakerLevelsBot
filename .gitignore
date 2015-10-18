@@ -255,4 +255,4 @@ docs/_build/
 target/
 
 # Settings file
-settings.ini
+/MarioMakerLevelsBot/MarioMakerLevelsBot/settings.ini
