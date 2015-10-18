@@ -20,6 +20,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.levels_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         self.chat_listener = None
+        self.connect_button.clicked.connect(self.connect)
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
 
     def connect(self):
@@ -30,12 +31,10 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
                 self.channel_lineedit.text(),
                 self)
             self.chat_listener.start()
-            print("Connected")
 
     def toggle_check_codes(self, checked):
         """Slot receiving information about if chat should be parsed or not.
         """
-        print(checked)
         if(checked):
             if(self.chat_listener is not None):
                 self.chat_listener.add_callback(self.parse_message)
@@ -46,7 +45,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
                     "The bot is currently not connected to Twitch chat.\n"
                     "Head to the Twitch chat info tab to connect."
                     )
-                self.find_codes_checkbox.setChecked(False)
+                self.find_codes_checkbox.setCheckState(QtCore.Qt.Unchecked)
 
         else:
             if(self.chat_listener is not None):

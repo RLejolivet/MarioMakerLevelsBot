@@ -96,7 +96,6 @@ class ChatListener(object):
                     "Unable to connect to Twitch chat\n"
                     "Make sure your internet connection doesn't restrict IRC."
                     )
-            print("Unable to connect")
             return False
         except OSError as e:
             if(e.winerror == 10056): # Already connected
@@ -169,7 +168,6 @@ class ChatListener(object):
                         "Unable to connect to Twitch chat\n"
                         "Invalid Name/Password (OAuth) combination."""
                         )
-                    print("Unable to connect: wrong name/password")
                     break
 
                 # IRC checks connectiond with ping.
