@@ -254,5 +254,5 @@ docs/_build/
 # PyBuilder
 target/
 
-# Settings file
-/MarioMakerLevelsBot/MarioMakerLevelsBot/settings.ini
+# User files
+/MarioMakerLevelsBot/MarioMakerLevelsBot/user/*
