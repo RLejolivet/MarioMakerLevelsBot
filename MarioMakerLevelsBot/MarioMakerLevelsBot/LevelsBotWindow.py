@@ -30,7 +30,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
 
     ###########################################################################
-    # IRC Info tab
+    # IRC info tab
     ###########################################################################
 
     def connect(self):
@@ -43,6 +43,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
             self.chat_listener.wrong_password.connect(self.wrong_password_slot)
             self.chat_listener.connection_failed.connect(self.connection_failed_slot)
+            self.chat_listener.connection_successful.connect(self.connection_successful_slot)
 
             self.chat_listener.start()
 
@@ -62,8 +63,11 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             "Make sure your internet connection doesn't restrict IRC."
             )
 
+    def connection_successful_slot(self, channel):
+        self.statusbar.showMessage("Successfully connected to channel {}".format(channel))
+
     ###########################################################################
-    # IRC Info tab
+    # Levels list tab
     ###########################################################################
 
     def toggle_check_codes(self, checked):

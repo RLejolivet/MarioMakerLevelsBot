@@ -18,6 +18,7 @@ class ChatListener(QtCore.QObject):
 
     wrong_password = QtCore.Signal()
     connection_failed = QtCore.Signal()
+    connection_successful = QtCore.Signal(str)
 
     def __init__(self, name, oauth, channel, parent=None):
         """Create the ChatListener object.
@@ -107,7 +108,6 @@ class ChatListener(QtCore.QObject):
             self.name, self.HOST, self.name + " Bot").encode())
 
         readbuffer = self.socket.recv(1024).decode()
-        print(readbuffer)
 
         if(readbuffer == ""): # Couldn't read anything, connection closed (empty pass?)
             self.wrong_password.emit()
@@ -141,6 +141,8 @@ class ChatListener(QtCore.QObject):
                 else: # Reconnecting didn't work
                     break # Getting out of the loop stops the thread
 
+            print(readbuffer)
+
             if(readbuffer == ""): # Didn't receive anything, connection may be closed
                 time.sleep(1) # Waiting a second not to flood with reconnections
                 self._connect()
@@ -161,10 +163,17 @@ class ChatListener(QtCore.QObject):
                     for callback in self.callbacks:
                         callback(channel, name, tags, message)
 
+                # Checks if it's a channel joined message
+                elif (len(line) >= 6 and
+                      line[1] == "353"):
+                    self.connection_successful.emit(line[4][1:])
+                    continue
+
+
                 # Checks if it's a login unsuccessful message
                 elif (len(line) >= 5 and
-                        line[3] == ":Login" and
-                        line[4] == "unsuccessful"):
+                      line[3] == ":Login" and
+                       line[4] == "unsuccessful"):
                     self.wrong_password.emit()
                     break
 
