@@ -51,4 +51,5 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         if(s is None):
             return
         else:
-            self.level_list_model.add_level(message[s.start(): s.end()].upper(), name, tags)
+            code = message[s.start(): s.end()].upper().replace(" ", "-").replace("_", "-")
+            self.level_list_model.add_level(code, name, tags)
