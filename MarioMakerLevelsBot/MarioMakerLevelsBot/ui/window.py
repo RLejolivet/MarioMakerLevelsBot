@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Fri Oct 16 19:48:16 2015
+# Created: Sun Oct 18 18:26:27 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -62,8 +62,19 @@ class Ui_MainWindow(object):
         self.twitch_oauth_lineedit.setObjectName("twitch_oauth_lineedit")
         self.formLayout.setWidget(1, QtGui.QFormLayout.FieldRole, self.twitch_oauth_lineedit)
         self.verticalLayout_2.addWidget(self.groupBox)
-        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem)
+        self.widget_6 = QtGui.QWidget(self.irc_info_tab)
+        self.widget_6.setObjectName("widget_6")
+        self.horizontalLayout_6 = QtGui.QHBoxLayout(self.widget_6)
+        self.horizontalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.connect_button = QtGui.QPushButton(self.widget_6)
+        self.connect_button.setObjectName("connect_button")
+        self.horizontalLayout_6.addWidget(self.connect_button)
+        spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_6.addItem(spacerItem)
+        self.verticalLayout_2.addWidget(self.widget_6)
+        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem1)
         self.tabWidget.addTab(self.irc_info_tab, "")
         self.levels_tab = QtGui.QWidget()
         self.levels_tab.setObjectName("levels_tab")
@@ -98,8 +109,8 @@ class Ui_MainWindow(object):
         self.delete_level_button = QtGui.QPushButton(self.widget_3)
         self.delete_level_button.setObjectName("delete_level_button")
         self.verticalLayout_3.addWidget(self.delete_level_button)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem1)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem2)
         self.reset_levels_button = QtGui.QPushButton(self.widget_3)
         self.reset_levels_button.setObjectName("reset_levels_button")
         self.verticalLayout_3.addWidget(self.reset_levels_button)
@@ -128,8 +139,8 @@ class Ui_MainWindow(object):
         self.delete_saved_button = QtGui.QPushButton(self.widget_4)
         self.delete_saved_button.setObjectName("delete_saved_button")
         self.verticalLayout_4.addWidget(self.delete_saved_button)
-        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem2)
+        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem3)
         self.reset_saved_button = QtGui.QPushButton(self.widget_4)
         self.reset_saved_button.setObjectName("reset_saved_button")
         self.verticalLayout_4.addWidget(self.reset_saved_button)
@@ -158,8 +169,8 @@ class Ui_MainWindow(object):
         self.delete_fake_button = QtGui.QPushButton(self.widget_5)
         self.delete_fake_button.setObjectName("delete_fake_button")
         self.verticalLayout_5.addWidget(self.delete_fake_button)
-        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem3)
+        spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem4)
         self.reset_fakes_button = QtGui.QPushButton(self.widget_5)
         self.reset_fakes_button.setObjectName("reset_fakes_button")
         self.verticalLayout_5.addWidget(self.reset_fakes_button)
@@ -208,6 +219,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Name", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Oauth", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButton.setText(QtGui.QApplication.translate("MainWindow", "?", None, QtGui.QApplication.UnicodeUTF8))
+        self.connect_button.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.irc_info_tab), QtGui.QApplication.translate("MainWindow", "Twich chat info", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("MainWindow", "Controls", None, QtGui.QApplication.UnicodeUTF8))
         self.find_codes_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Find codes from chat", None, QtGui.QApplication.UnicodeUTF8))
