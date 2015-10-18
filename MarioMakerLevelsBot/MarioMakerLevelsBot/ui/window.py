@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Sun Oct 18 21:21:41 2015
+# Created: Sun Oct 18 22:00:51 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -100,6 +100,9 @@ class Ui_MainWindow(object):
         self.subs_only_checkbox = QtGui.QCheckBox(self.widget_3)
         self.subs_only_checkbox.setObjectName("subs_only_checkbox")
         self.verticalLayout_3.addWidget(self.subs_only_checkbox)
+        self.mods_only_checkbox = QtGui.QCheckBox(self.widget_3)
+        self.mods_only_checkbox.setObjectName("mods_only_checkbox")
+        self.verticalLayout_3.addWidget(self.mods_only_checkbox)
         self.save_level_button = QtGui.QPushButton(self.widget_3)
         self.save_level_button.setObjectName("save_level_button")
         self.verticalLayout_3.addWidget(self.save_level_button)
@@ -225,7 +228,8 @@ class Ui_MainWindow(object):
         self.find_codes_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Find codes from chat", None, QtGui.QApplication.UnicodeUTF8))
         self.hide_likely_fakes_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Hide most likely fakes", None, QtGui.QApplication.UnicodeUTF8))
         self.hide_potentially_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Hide potentially fakes", None, QtGui.QApplication.UnicodeUTF8))
-        self.subs_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from subs/mods only", None, QtGui.QApplication.UnicodeUTF8))
+        self.subs_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from subs only", None, QtGui.QApplication.UnicodeUTF8))
+        self.mods_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from mods only", None, QtGui.QApplication.UnicodeUTF8))
         self.save_level_button.setText(QtGui.QApplication.translate("MainWindow", "Add selected level(s) to saved list", None, QtGui.QApplication.UnicodeUTF8))
         self.fake_level_button.setText(QtGui.QApplication.translate("MainWindow", "Add selected level(s) to fakes list", None, QtGui.QApplication.UnicodeUTF8))
         self.delete_level_button.setText(QtGui.QApplication.translate("MainWindow", "Delete selected level(s)", None, QtGui.QApplication.UnicodeUTF8))

@@ -1,9 +1,17 @@
-﻿import datetime
+﻿import enum
+import datetime
 import threading
 
 from PySide import QtCore
 from PySide.QtCore import QModelIndex
 from PySide.QtCore import Qt
+
+class Filters(enum.IntEnum):
+    NoFilter = 0
+    LikelyFake = 1
+    PotentiallyFake = 2
+    Subs = 4
+    Mods = 8
 
 class Level(object):
     """The class representing a Mario Maker Level for the following model."""

@@ -183,7 +183,14 @@
            <item>
             <widget class="QCheckBox" name="subs_only_checkbox">
              <property name="text">
-              <string>Show levels from subs/mods only</string>
+              <string>Show levels from subs only</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="mods_only_checkbox">
+             <property name="text">
+              <string>Show levels from mods only</string>
              </property>
             </widget>
            </item>
