@@ -253,3 +253,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Settings file
+settings.ini

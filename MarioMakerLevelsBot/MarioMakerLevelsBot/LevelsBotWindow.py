@@ -15,6 +15,15 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         super().__init__(None)
         self.setupUi(self)
 
+        # Settings
+        self.settings = QtCore.QSettings("settings", QtCore.QSettings.IniFormat, self)
+        self.channel_lineedit.setText(self.settings.value("irc_info/channel", ""))
+        self.twitch_name_lineedit.setText(self.settings.value("irc_info/nick", ""))
+        self.twitch_oauth_lineedit.setText(self.settings.value("irc_info/oauth", ""))
+
+        # Menu bar
+        self.actionAbout.triggered.connect(self.about)
+
         # IRC info tab
 
         self.chat_listener = None
@@ -27,6 +36,27 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.levels_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
+
+
+    ###########################################################################
+    # Menu bar
+    ###########################################################################
+
+    def about(self):
+        """Display a messagebox with some information about the program.
+        """
+        QtGui.QMessageBox.about(
+            self,
+            "Simple IRC bot for Twitch created by Laraeph",
+            "Simple IRC bot for Twitch created by Laraeph\n"
+            "Pull Mario Maker Level Codes from chat easily!\n"
+            "Howto use: http://mentor2.dyndns.org/Laraeph/MarioMakerBot\n"
+            "Or: https://github.com/RLejolivet/MarioMakerLevelsBot\n"
+            "\n"
+            "Contact me for questions, evolution requests:\n"
+            "twitch.tv/laraeph\n"
+            "twitter.com/LaraephFR\n"
+            "laraephddo@gmail.com\n")
 
 
     ###########################################################################
@@ -65,6 +95,9 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
     def connection_successful_slot(self, channel):
         self.statusbar.showMessage("Successfully connected to channel {}".format(channel))
+        self.settings.setValue("irc_info/channel", self.channel_lineedit.text())
+        self.settings.setValue("irc_info/nick", self.twitch_name_lineedit.text())
+        self.settings.setValue("irc_info/oauth", self.twitch_oauth_lineedit.text())
 
     ###########################################################################
     # Levels list tab
