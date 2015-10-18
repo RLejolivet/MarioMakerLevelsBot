@@ -24,21 +24,23 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
     def connect(self):
         if(self.chat_listener is None):
-                self.chat_listener = ChatListener.ChatListener(
-                    self.twitch_name_lineedit.text(),
-                    self.twitch_oauth_lineedit.text(),
-                    self.channel_lineedit.text(),
-                    self)
-                self.chat_listener.start()
+            self.chat_listener = ChatListener.ChatListener(
+                self.twitch_name_lineedit.text(),
+                self.twitch_oauth_lineedit.text(),
+                self.channel_lineedit.text(),
+                self)
+            self.chat_listener.start()
+            print("Connected")
 
     def toggle_check_codes(self, checked):
         """Slot receiving information about if chat should be parsed or not.
         """
+        print(checked)
         if(checked):
             if(self.chat_listener is not None):
                 self.chat_listener.add_callback(self.parse_message)
             else:
-                QtGui.QMessageBox(
+                box = QtGui.QMessageBox.information(
                     self,
                     "Not connected to Twitch chat",
                     "The bot is currently not connected to Twitch chat.\n"

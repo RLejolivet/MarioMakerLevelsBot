@@ -90,7 +90,7 @@ class ChatListener(object):
             self.socket.connect((self.HOST, self.PORT))
         except ConnectionAbortedError:
             if(self.parent is not None):
-                QtGui.QMessageBox(
+                QtGui.QMessageBox.information(
                     self.parent,
                     "Unable to connect to Twitch chat",
                     "Unable to connect to Twitch chat\n"
@@ -163,7 +163,7 @@ class ChatListener(object):
                 elif (len(line) >= 5 and
                         line[3] == ":Login" and
                         line[4] == "unsuccessful"):
-                    QtGui.QMessageBox(
+                    QtGui.QMessageBox.information(
                         self.parent,
                         "Unable to connect to Twitch chat",
                         "Unable to connect to Twitch chat\n"
