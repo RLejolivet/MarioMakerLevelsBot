@@ -199,12 +199,12 @@ class LevelListModel(QtCore.QAbstractTableModel):
         Return True if they are, False if they are not.
         Compatible if any of the filters in the model are not True in the level.
         Because of the values chosen for the filters, this means the bit by bit
-        logical AND has to be non-zero if the model filter is non-zero.
+        logical AND has to be zero.
         """
         if(self.filters == Filters.NoFilter):
             return True
         else:
-            return (self.filters & level.filters > 0)
+            return (self.filters & level.filters == 0)
 
     def _find_level_index(self, level):
         """Return the index at which the level should be inserted in the view list.
