@@ -169,7 +169,7 @@
            <item>
             <widget class="QCheckBox" name="hide_likely_fakes_checkbox">
              <property name="text">
-              <string>Hide most likely fakes</string>
+              <string>Hide levels on fakes list</string>
              </property>
             </widget>
            </item>

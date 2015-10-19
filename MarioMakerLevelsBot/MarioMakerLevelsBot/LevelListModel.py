@@ -8,7 +8,7 @@ from PySide.QtCore import Qt
 
 class Filters(enum.IntEnum):
     NoFilter = 0
-    LikelyFake = 1
+    Fake = 1
     PotentiallyFake = 2
     Subs = 4
     Mods = 8
@@ -17,6 +17,7 @@ class Level(object):
     """The class representing a Mario Maker Level for the following model."""
 
     def __init__(self, date, code, name, tags):
+        super().__init__()
         self.date = date
         self.code = code
         self.name = name
