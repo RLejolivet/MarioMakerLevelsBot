@@ -1,10 +1,4 @@
-'''
-Created on 6 juil. 2015
-
-@author: Raphael
-'''
-
-import enum
+﻿import enum
 
 
 class user_type(enum.IntEnum):
