@@ -30,12 +30,30 @@ class Level(object):
         self.times_requested = 1
         self.filters = Filters.NoFilter
 
+        self.check_filters()
+
     def check_filters(self):
         """Check which filters may apply to this Level.
         """
         # TODO: call check if the level is in the fakes
-        # TODO: call check if the level may be fake
-        # TODO: call check if tags contain sub and/or mod
+        self.check_potentially_fake()
+        self.check_tags()
+
+    def check_potentially_fake(self):
+        """Check if the code is potentially fake due to its form.
+        """
+        # Check if the second group of numbers is different than 0000
+        if(self.code[5:9] != "0000"):
+            self.filters |= Filters.PotentiallyFake
+
+    def check_tags(self):
+        """Check the tags to see if any filters should be applied to this level.
+        """
+        if(self.tags is None or not self.tags.get('subscriber', False)):
+            self.filters |= Filters.NonSubs
+
+        if(self.tags is None or not self.tags.get('user-type', 0) > 0):
+            self.filters |= Filters.NonMods
 
 class LevelListModel(QtCore.QAbstractTableModel):
     """The Qt model for the levels list"""
