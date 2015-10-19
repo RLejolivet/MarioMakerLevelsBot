@@ -22,6 +22,15 @@ class Level(object):
         self.code = code
         self.name = name
         self.tags = tags
+        self.times_requested = 1
+        self.filters = Filters.NoFilter
+
+    def check_filters(self):
+        """Check which filters may apply to this Level.
+        """
+        # TODO: call check if the level is in the fakes
+        # TODO: call check if the level may be fake
+        # TODO: call check if tags contain sub and/or mod
 
 class LevelListModel(QtCore.QAbstractTableModel):
     """The Qt model for the levels list"""
@@ -30,8 +39,17 @@ class LevelListModel(QtCore.QAbstractTableModel):
         """Initialize the model.
         Loading the levels from a file?"""
         super().__init__(parent)
-        self.levels_list = []
-        self.list_lock = threading.Lock()
+
+        # Contains all the submitted levels.
+        # Key: level code
+        # Value: Level instance
+        self.levels_dict = {}
+        self.dict_lock = threading.Lock() # Prevent access racing on levels dict
+
+        # Contains all the levels that should be shown to the view
+        # The index in this list is the row for the view.
+        self.view_list = []
+        self.list_lock = threading.Lock() # Prevent access racing on view list
 
     ###########################################################################
     # Qt methods.
@@ -40,11 +58,11 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
     def columnCount(self, parent=QModelIndex()):
         """Return the number of columns in the current model."""
-        return 4 #Date added, level code, request name, tags
+        return 5 #Date added, level code, request name, tags, times requested
 
     def rowCount(self, parent=QModelIndex()):
         """Return the number of rows in the model."""
-        return len(self.levels_list)
+        return len(self.view_list)
 
     def data(self, index, role=Qt.DisplayRole):
         """Return the data for the index, given the corresponding role."""
@@ -54,14 +72,14 @@ class LevelListModel(QtCore.QAbstractTableModel):
         if(role == Qt.DisplayRole):
             row = index.row()
             col = index.column()
-            if(col == 0):
-                return "" # self.levels_list[row].date
-            elif(col == 1):
-                return self.levels_list[row].code
-            elif(col == 2):
-                return self.levels_list[row].name
-            elif(col == 3):
-                tags = self.levels_list[row].tags
+            if(col == 0): # Number requested
+                return "{}".format(row) # self.view_list[row].date
+            elif(col == 1): # Code
+                return self.view_list[row].code
+            elif(col == 2): # Name the level was requested by
+                return self.view_list[row].name
+            elif(col == 3): # Tags (sub and/or mod)
+                tags = self.view_list[row].tags
                 if(tags is None):
                     return ""
                 elif(tags.get('subscriber', False) and tags.get('user-type', 0)): # tags['user-type'] > 0
@@ -72,6 +90,8 @@ class LevelListModel(QtCore.QAbstractTableModel):
                     return "Mod"
                 else:
                     return ""
+            elif(col == 4): # Number of times requested
+                return self.view_list[row].times_requested
 
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
@@ -85,6 +105,8 @@ class LevelListModel(QtCore.QAbstractTableModel):
                 return "User"
             elif(section == 3):
                 return "Privileges"
+            elif(section == 4):
+                return "Times requested"
 
     #def sort(column, order=Qt.AscendingOrder):
     #    """Sort the indexes by column, in order."""
@@ -105,8 +127,8 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
         self.list_lock.acquire()
 
-        self.beginInsertRows(QModelIndex(), len(self.levels_list), len(self.levels_list))
-        self.levels_list.append(Level(datetime.datetime.now(), code, name, tags))
+        self.beginInsertRows(QModelIndex(), len(self.view_list), len(self.view_list))
+        self.view_list.append(Level(datetime.datetime.now(), code, name, tags))
         self.endInsertRows()
 
         self.list_lock.release()
@@ -117,8 +139,10 @@ class LevelListModel(QtCore.QAbstractTableModel):
     ###########################################################################
 
     def _is_valid_index(self, index):
+        """Check if the provided index is valid in the model.
+        """
         row = index.row()
         column = index.column()
         return not (row < 0 or column < 0 or
-                    row >= len(self.levels_list) or column > 4 or
+                    row >= len(self.view_list) or column > 4 or
                     index == QModelIndex())
