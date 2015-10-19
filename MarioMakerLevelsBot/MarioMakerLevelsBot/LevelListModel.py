@@ -10,8 +10,8 @@ class Filters(enum.IntEnum):
     NoFilter = 0
     Fake = 1
     PotentiallyFake = 2
-    Subs = 4
-    Mods = 8
+    NonSubs = 4
+    NonMods = 8
 
 class Level(object):
     """The class representing a Mario Maker Level for the following model."""
@@ -39,6 +39,9 @@ class LevelListModel(QtCore.QAbstractTableModel):
         """Initialize the model.
         Loading the levels from a file?"""
         super().__init__(parent)
+
+        # Filters on the model
+        self.filters = Filters.NoFilter
 
         # Contains all the submitted levels.
         # Key: level code
@@ -73,7 +76,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
             row = index.row()
             col = index.column()
             if(col == 0): # Number requested
-                return "{}".format(row) # self.view_list[row].date
+                return "{}".format(row+1) # self.view_list[row].date
             elif(col == 1): # Code
                 return self.view_list[row].code
             elif(col == 2): # Name the level was requested by
@@ -125,13 +128,30 @@ class LevelListModel(QtCore.QAbstractTableModel):
             if(display_name != ""):
                 name = display_name
 
-        self.list_lock.acquire()
+        self.dict_lock.acquire()
 
-        self.beginInsertRows(QModelIndex(), len(self.view_list), len(self.view_list))
-        self.view_list.append(Level(datetime.datetime.now(), code, name, tags))
-        self.endInsertRows()
+        level = self.levels_dict.get(code, None)
 
-        self.list_lock.release()
+        if(level is not None):
+            level.times_requested += 1
+
+            # Check if the level is (probably) in the list using filters
+            if(self._check_filters(level)): # Filters are comaptible
+                try:
+                    index = self.createIndex(self.view_list.index(level), 4)
+                    self.dataChanged.emit(index, index)
+                except ValueError: # It wasn't actually in the list, why?
+                    self._add_level_to_view(level)
+
+
+        else:
+            level = Level(datetime.datetime.now(), code, name, tags)
+            self.levels_dict[code] = level
+
+            if(self._check_filters(level)):
+                self._add_level_to_view(level)
+
+        self.dict_lock.release()
 
     ###########################################################################
     # Private methods
@@ -146,3 +166,34 @@ class LevelListModel(QtCore.QAbstractTableModel):
         return not (row < 0 or column < 0 or
                     row >= len(self.view_list) or column > 4 or
                     index == QModelIndex())
+
+    def _check_filters(self, level):
+        """Check if the filters on the model and the ones on a level are
+        compatible.
+
+        Return True if they are, False if they are not.
+        Compatible if any of the filters in the model are not True in the level.
+        Because of the values chosen for the filters, this means the bit by bit
+        logical AND has to be non-zero if the model filter is non-zero.
+        """
+        if(self.filters == Filters.NoFilter):
+            return True
+        else:
+            return (self.filters & level.filters > 0)
+
+    def _find_level_index(self, level):
+        """Return the index at which the level should be inserted in the view list.
+        """
+        # TODO: add the sorting options
+        return len(self.view_list)
+
+    def _add_level_to_view(self, level):
+        """Adds the level to the view, at the correct position.
+        """
+        index = self._find_level_index(level)
+
+        self.list_lock.acquire()
+        self.beginInsertRows(QModelIndex(), index, index)
+        self.view_list.insert(index, level)
+        self.endInsertRows()
+        self.list_lock.release()
