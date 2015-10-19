@@ -241,4 +241,13 @@ class LevelListModel(QtCore.QAbstractTableModel):
     def _reset_view(self):
         """Rebuilds the entire view list according to the filters and sorting.
         """
-        # TODO: rebuild the entire thing
+        self.dict_lock.acquire()
+        self.list_lock.acquire()
+
+        self.beginResetModel()
+        self.view_list = [ level for level in self.levels_dict.values() if self._check_filters(level) ]
+        # TODO: sort the list
+        self.endResetModel()
+
+        self.list_lock.release()
+        self.dict_lock.release()
