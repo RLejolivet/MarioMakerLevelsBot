@@ -37,6 +37,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.levels_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
+        self.hide_likely_fakes_checkbox.stateChanged.connect(self.level_list_model.hide_fake_levels)
 
 
     ###########################################################################
@@ -164,3 +165,4 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         else:
             code = message[s.start(): s.end()].upper().replace(" ", "-").replace("_", "-")
             self.level_list_model.add_level(code, name, tags)
+

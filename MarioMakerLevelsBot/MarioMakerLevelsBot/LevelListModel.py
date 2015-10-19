@@ -7,7 +7,12 @@ from PySide.QtCore import QModelIndex
 from PySide.QtCore import Qt
 
 class Filters(enum.IntEnum):
+    """Enumerates all the filters.
+    The numbers are powers of two to enable bitwise operations to select filters.
+    AllFilters should be the number of all filters enabled bitwise.
+    """
     NoFilter = 0
+    AllFilters = 0x0F
     Fake = 1
     PotentiallyFake = 2
     NonSubs = 4
@@ -153,6 +158,19 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
         self.dict_lock.release()
 
+    def hide_fake_levels(self, hide):
+        """Show or hide the levels that are labeled as fake.
+        """
+        if(bool(self.filters & Filters.Fake) == bool(hide)): # Filter already correct
+            return
+        else:
+            if(hide): # Adding the Fake filters
+                self.filters |= Filters.Fake # Add the Fake filter bit
+            else:
+                self.filters &= Filters.AllFilters ^ Filters.Fake # Remove the Fake filter bit
+
+            self._reset_view()
+
     ###########################################################################
     # Private methods
     # Used by the model for the model
@@ -197,3 +215,8 @@ class LevelListModel(QtCore.QAbstractTableModel):
         self.view_list.insert(index, level)
         self.endInsertRows()
         self.list_lock.release()
+
+    def _reset_view(self):
+        """Rebuilds the entire view list according to the filters and sorting.
+        """
+        # TODO: rebuild the entire thing
