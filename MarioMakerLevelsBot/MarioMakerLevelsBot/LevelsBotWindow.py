@@ -38,6 +38,9 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
         self.hide_likely_fakes_checkbox.stateChanged.connect(self.level_list_model.hide_fake_levels)
+        self.hide_potentially_checkbox.stateChanged.connect(self.level_list_model.hide_potentially_fake_levels)
+        self.subs_only_checkbox.stateChanged.connect(self.level_list_model.show_subs_levels_only)
+        self.mods_only_checkbox.stateChanged.connect(self.level_list_model.show_mods_levels_only)
 
 
     ###########################################################################

@@ -161,15 +161,22 @@ class LevelListModel(QtCore.QAbstractTableModel):
     def hide_fake_levels(self, hide):
         """Show or hide the levels that are labeled as fake.
         """
-        if(bool(self.filters & Filters.Fake) == bool(hide)): # Filter already correct
-            return
-        else:
-            if(hide): # Adding the Fake filters
-                self.filters |= Filters.Fake # Add the Fake filter bit
-            else:
-                self.filters &= Filters.AllFilters ^ Filters.Fake # Remove the Fake filter bit
+        return self._toggle_filter(Filters.Fake, hide)
 
-            self._reset_view()
+    def hide_potentially_fake_levels(self, hide):
+        """Show or hide the levels that are labeled as potentially fake.
+        """
+        return self._toggle_filter(Filters.PotentiallyFake, hide)
+
+    def show_subs_levels_only(self, show):
+        """Show or hide the levels that are labeled as non submitted by subs.
+        """
+        return self._toggle_filter(Filters.NonSubs, show)
+
+    def show_mods_levels_only(self, show):
+        """Show or hide the levels that are labeled as non submitted by mods.
+        """
+        return self._toggle_filter(Filters.NonMods, show)
 
     ###########################################################################
     # Private methods
@@ -215,6 +222,21 @@ class LevelListModel(QtCore.QAbstractTableModel):
         self.view_list.insert(index, level)
         self.endInsertRows()
         self.list_lock.release()
+
+    def _toggle_filter(self, filter, toggle):
+        """Toggle the filter on/off according to toggle and rebuild the view
+        If it already is on/off, do nothing.
+        """
+        
+        if(bool(self.filters & filter) == bool(toggle)): # Filter already correctly set
+            return
+        else:
+            if(toggle): # Adding the filter
+                self.filters |= filter # Add the filter bit
+            else:
+                self.filters &= Filters.AllFilters ^ filter # Remove the filter bit
+
+            self._reset_view()
 
     def _reset_view(self):
         """Rebuilds the entire view list according to the filters and sorting.
