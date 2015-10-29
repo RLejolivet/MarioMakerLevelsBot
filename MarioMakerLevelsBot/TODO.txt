@@ -11,8 +11,6 @@ Things left to do:
 
 - Check if a level is in the fake list when creating it
 
-- Adding colors to the potential fakes and real fakes
-
 - Improve the README.md
 
 - Make a setup.py to freeze with cx_freeze

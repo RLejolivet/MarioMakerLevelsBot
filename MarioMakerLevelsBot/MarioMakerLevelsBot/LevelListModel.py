@@ -2,7 +2,7 @@
 import datetime
 import threading
 
-from PySide import QtCore
+from PySide import QtCore, QtGui
 from PySide.QtCore import QModelIndex
 from PySide.QtCore import Qt
 
@@ -118,6 +118,13 @@ class LevelListModel(QtCore.QAbstractTableModel):
                     return ""
             elif(col == 4): # Number of times requested
                 return self.view_list[row].times_requested
+
+        elif(role == Qt.TextColorRole):
+            row = index.row()
+            if(self.view_list[row].filters & Filters.Fake): # Fake flag is on
+                return QtGui.QColor("red")
+            elif(self.view_list[row].filters & Filters.PotentiallyFake): # Potentially fake flag is on
+                return QtGui.QColor("orange")
 
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
