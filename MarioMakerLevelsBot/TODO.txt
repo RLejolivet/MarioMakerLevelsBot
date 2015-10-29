@@ -5,7 +5,7 @@ Things left to do:
 	MarioMakerLevelsBot\LevelListModel.py(230)
 	MarioMakerLevelsBot\LevelListModel.py(267)
 
-- Implement deletion of levels from the model
+- Make the window remember various settings (checkbox states, size)
 
 - Make models for saved levels and fake levels (possibly with less info, and/or with a "note")
 
