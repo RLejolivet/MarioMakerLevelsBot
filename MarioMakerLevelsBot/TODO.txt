@@ -1,0 +1,20 @@
+Things left to do:
+
+- Add sorting
+	MarioMakerLevelsBot\LevelListModel.py(139)
+	MarioMakerLevelsBot\LevelListModel.py(230)
+	MarioMakerLevelsBot\LevelListModel.py(267)
+
+- Implement deletion of levels from the model
+
+- Make models for saved levels and fake levels (possibly with less info, and/or with a "note")
+
+- Check if a level is in the fake list when creating it
+
+- Adding colors to the potential fakes and real fakes
+
+- Improve the README.md
+
+- Make a setup.py to freeze with cx_freeze
+
+- Make a webpage with images/video (?)
