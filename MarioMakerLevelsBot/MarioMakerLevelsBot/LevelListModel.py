@@ -145,6 +145,32 @@ class LevelListModel(QtCore.QAbstractTableModel):
     #    """Sort the indexes by column, in order."""
         #TODO: implement
 
+    def removeRows(self, row, count, parent=QModelIndex()):
+        """Removes count rows starting with the given row under parent parent from the model.
+
+        Return True if the rows were successfully removed; otherwise return False.
+        """
+        self.beginRemoveRows(parent, row, row + count)
+
+        levels_deleted = []
+        for offset in range(count):
+            level = self.view_list[row + offset]
+            levels_deleted.append(level)
+            del self.levels_dict[level.code]
+
+        del self.view_list[row:row+count]
+
+        self.endRemoveRows()
+
+        return True
+
+    def removeRow(self, row, parent=QModelIndex()):
+        """Remove a single row.
+
+        Return True if the row was successfully removed; otherwise return False.
+        """
+        return self.removeRows(row, 1, parent)
+
     ###########################################################################
     # User methods.
     # Those are used by the rest of the program to interact with the data
