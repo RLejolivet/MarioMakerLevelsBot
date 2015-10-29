@@ -42,6 +42,9 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.subs_only_checkbox.stateChanged.connect(self.level_list_model.show_subs_levels_only)
         self.mods_only_checkbox.stateChanged.connect(self.level_list_model.show_mods_levels_only)
 
+        self.delete_level_button.clicked.connect(self.delete_selected_levels_slot)
+        self.reset_levels_button.clicked.connect(self.level_list_model.reset)
+
 
     ###########################################################################
     # Menu bar
@@ -169,3 +172,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             code = message[s.start(): s.end()].upper().replace(" ", "-").replace("_", "-")
             self.level_list_model.add_level(code, name, tags)
 
+    def delete_selected_levels_slot(self):
+        """Slot for the "delete selected level(s)" button.
+        """
+        selected_indexes = self.levels_tableView.selectionModel().selectedRows()
+        self.level_list_model.remove_indexes(selected_indexes)
