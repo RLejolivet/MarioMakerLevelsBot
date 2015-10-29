@@ -150,6 +150,9 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
         Return True if the rows were successfully removed; otherwise return False.
         """
+        self.dict_lock.acquire()
+        self.list_lock.acquire()
+
         self.beginRemoveRows(parent, row, row + count)
 
         levels_deleted = []
@@ -161,6 +164,9 @@ class LevelListModel(QtCore.QAbstractTableModel):
         del self.view_list[row:row+count]
 
         self.endRemoveRows()
+
+        self.list_lock.release()
+        self.dict_lock.release()
 
         return True
 
