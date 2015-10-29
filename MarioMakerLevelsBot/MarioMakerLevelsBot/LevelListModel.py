@@ -171,6 +171,20 @@ class LevelListModel(QtCore.QAbstractTableModel):
         """
         return self.removeRows(row, 1, parent)
 
+    def reset(self):
+        """Reset the model. Removes all levels from it.
+        """
+        self.dict_lock.acquire()
+        self.list_lock.acquire()
+
+        self.beginResetModel()
+        self.levels_dict = {}
+        self.view_list = []
+        self.endResetModel()
+        
+        self.list_lock.release()
+        self.dict_lock.release()
+
     ###########################################################################
     # User methods.
     # Those are used by the rest of the program to interact with the data
