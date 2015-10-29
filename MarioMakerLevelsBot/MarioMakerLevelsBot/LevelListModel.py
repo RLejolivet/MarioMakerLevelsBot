@@ -229,6 +229,18 @@ class LevelListModel(QtCore.QAbstractTableModel):
         """
         return self._toggle_filter(Filters.NonMods, show)
 
+    def remove_indexes(self, indexes):
+        """Remove all the rows in the indexes list.
+        """
+        # Create a set of the rows (as int) to delete
+        selected_rows = set()
+        for index in indexes:
+            selected_rows.add(index.row())
+
+        # Delete all of them one by one (easy but maybe not the best performance-wise)
+        for row in selected_rows:
+            self.removeRow(row)
+
     ###########################################################################
     # Private methods
     # Used by the model for the model
