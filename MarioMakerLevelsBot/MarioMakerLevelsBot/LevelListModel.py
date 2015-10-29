@@ -153,12 +153,10 @@ class LevelListModel(QtCore.QAbstractTableModel):
         self.dict_lock.acquire()
         self.list_lock.acquire()
 
-        self.beginRemoveRows(parent, row, row + count)
+        self.beginRemoveRows(parent, row, row + count -1)
 
-        levels_deleted = []
         for offset in range(count):
             level = self.view_list[row + offset]
-            levels_deleted.append(level)
             del self.levels_dict[level.code]
 
         del self.view_list[row:row+count]
@@ -258,8 +256,8 @@ class LevelListModel(QtCore.QAbstractTableModel):
             selected_rows.add(index.row())
 
         # Delete all of them one by one (easy but maybe not the best performance-wise)
-        for row in selected_rows:
-            self.removeRow(row)
+        for index, row in enumerate(sorted(selected_rows)):
+            self.removeRow(row - index) # The actual target row to be removed decreases by one when a previous is removed
 
     ###########################################################################
     # Private methods
