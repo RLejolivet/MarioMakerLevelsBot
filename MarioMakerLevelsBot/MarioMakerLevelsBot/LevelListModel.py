@@ -108,12 +108,12 @@ class LevelListModel(QtCore.QAbstractTableModel):
         # Key: level code
         # Value: Level instance
         self.levels_dict = {}
-        self.dict_lock = threading.Lock() # Prevent access racing on levels dict
+        self.dict_lock = threading.RLock() # Prevent access racing on levels dict
 
         # Contains all the levels that should be shown to the view
         # The index in this list is the row for the view.
         self.view_list = []
-        self.list_lock = threading.Lock() # Prevent access racing on view list
+        self.list_lock = threading.RLock() # Prevent access racing on view list
 
     ###########################################################################
     # Qt methods.
