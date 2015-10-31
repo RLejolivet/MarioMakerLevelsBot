@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Mon Oct 19 15:06:24 2015
+# Created: Sun Nov  1 00:39:25 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -123,8 +123,10 @@ class Ui_MainWindow(object):
         self.levels_tableView.setAlternatingRowColors(True)
         self.levels_tableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         self.levels_tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.levels_tableView.setSortingEnabled(True)
         self.levels_tableView.setObjectName("levels_tableView")
         self.levels_tableView.verticalHeader().setVisible(False)
+        self.levels_tableView.verticalHeader().setSortIndicatorShown(True)
         self.horizontalLayout_3.addWidget(self.levels_tableView)
         self.tabWidget.addTab(self.levels_tab, "")
         self.saved_tab = QtGui.QWidget()
@@ -153,8 +155,10 @@ class Ui_MainWindow(object):
         self.saved_tableView.setAlternatingRowColors(True)
         self.saved_tableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         self.saved_tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.saved_tableView.setSortingEnabled(True)
         self.saved_tableView.setObjectName("saved_tableView")
         self.saved_tableView.verticalHeader().setVisible(False)
+        self.saved_tableView.verticalHeader().setSortIndicatorShown(True)
         self.horizontalLayout_4.addWidget(self.saved_tableView)
         self.tabWidget.addTab(self.saved_tab, "")
         self.fake_tab = QtGui.QWidget()
@@ -183,8 +187,10 @@ class Ui_MainWindow(object):
         self.fakes_tableView.setAlternatingRowColors(True)
         self.fakes_tableView.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
         self.fakes_tableView.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.fakes_tableView.setSortingEnabled(True)
         self.fakes_tableView.setObjectName("fakes_tableView")
         self.fakes_tableView.verticalHeader().setVisible(False)
+        self.fakes_tableView.verticalHeader().setSortIndicatorShown(True)
         self.horizontalLayout_5.addWidget(self.fakes_tableView)
         self.tabWidget.addTab(self.fake_tab, "")
         self.verticalLayout.addWidget(self.tabWidget)

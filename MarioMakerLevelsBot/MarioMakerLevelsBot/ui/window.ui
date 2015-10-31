@@ -252,8 +252,14 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+           <bool>true</bool>
           </attribute>
          </widget>
         </item>
@@ -318,8 +324,14 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+           <bool>true</bool>
           </attribute>
          </widget>
         </item>
@@ -384,8 +396,14 @@
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
           </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+           <bool>true</bool>
           </attribute>
          </widget>
         </item>
