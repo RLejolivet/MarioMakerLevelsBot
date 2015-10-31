@@ -18,6 +18,20 @@ class Filters(enum.IntEnum):
     NonSubs = 4
     NonMods = 8
 
+class Sorting(enum.IntEnum):
+    """Enumerates all the sorting options.
+    Like Filters, the numbers are powers of two,
+    in case multiple sorting options can be selected at the same time.
+    """
+    NoSorting = 0 # Unlikely but to keep boolean logic
+    AllSorting = 0x1F # Even more unlikely but may be used in bitwise operations maybe
+    Date = 1
+    Code = 2
+    User = 4
+    Priviledges = 8
+    TimesRequested = 16
+
+
 class Level(object):
     """The class representing a Mario Maker Level for the following model."""
 
@@ -54,6 +68,30 @@ class Level(object):
 
         if(self.tags is None or not self.tags.get('user-type', 0) > 0):
             self.filters |= Filters.NonMods
+
+    @classmethod
+    def key(self, sorting):
+        """Return a key function to sort a Level according to the sorting parameter.
+        """
+        if(sorting & Sorting.NoSorting):
+            return None
+
+        if(sorting & Sorting.Date):
+            return (lambda x: x.date)
+
+        if(sorting & Sorting.Code):
+            return (lambda x: x.code)
+
+        if(sorting & Sorting.User):
+            return (lambda x: x.name)
+
+        if(sorting & Sorting.Priviledges):
+            # Not having priviledges grants "points": the more points the higher in the sort
+            return (lambda x: (x.filters & Filters.NonSubs) + (x.filters & Filters.NonMods))
+
+        if(sorting & Sorting.TimesRequested):
+            return (lambda x: x.times_requested)
+
 
 class LevelListModel(QtCore.QAbstractTableModel):
     """The Qt model for the levels list"""
