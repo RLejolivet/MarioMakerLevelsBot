@@ -347,12 +347,6 @@ class LevelListModel(QtCore.QAbstractTableModel):
         else:
             return (self.filters & level.filters == 0)
 
-    def _find_level_index(self, level):
-        """Return the index at which the level should be inserted in the view list.
-        """
-        # TODO: add the sorting options
-        return len(self.view_list)
-
     def _add_level_to_view(self, level):
         """Adds the level to the view, at the correct position.
         """

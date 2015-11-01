@@ -1,10 +1,5 @@
 Things left to do:
 
-- Add sorting
-	MarioMakerLevelsBot\LevelListModel.py(139)
-	MarioMakerLevelsBot\LevelListModel.py(230)
-	MarioMakerLevelsBot\LevelListModel.py(267)
-
 - Make the window remember various settings (checkbox states, size)
 
 - Make models for saved levels and fake levels (possibly with less info, and/or with a "note")
