@@ -32,11 +32,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MarioMakerLevelsBot.py" />
+    <Compile Include="Tests\CodeSpamBot.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="TwitchTags.py" />
     <Compile Include="ui\window.py" />
     <Compile Include="ui\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Tests\" />
     <Folder Include="ui\" />
   </ItemGroup>
   <ItemGroup>
