@@ -11,3 +11,5 @@ Things left to do:
 - Make a setup.py to freeze with cx_freeze
 
 - Make a webpage with images/video (?)
+
+- Add a "select random" button
