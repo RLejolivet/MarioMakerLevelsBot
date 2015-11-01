@@ -32,7 +32,7 @@ class ChatSpammer(QtCore.QObject):
         self.thread.setDaemon(True)
 
         self.write_thread = threading.Thread(target=self._main_writer)
-        self.thread.setDaemon(True)
+        self.write_thread.setDaemon(True)
 
     def start(self):
         """Start listening to the Twitch chat.
@@ -53,15 +53,21 @@ class ChatSpammer(QtCore.QObject):
         # Stop the current listening thread and create a new one
         try:
             self.thread._stop()
-            self.write_thread._stop()
-        except:
-            pass
+        except Exception as e:
+            print("Couldn't stop the reading thread apparently :/")
+            print(e)
 
-        self.thread = threading.Thread(target=self._main)
+        try:
+            self.write_thread._stop()
+        except Exception as e:
+            print("Couldn't stop the writing thread apparently :/")
+            print(e)
+
+        self.thread = threading.Thread(target=self._main_listener)
         self.thread.setDaemon(True)
 
         self.write_thread = threading.Thread(target=self._main_writer)
-        self.thread.setDaemon(True)
+        self.write_thread.setDaemon(True)
 
     def isAlive(self):
         """Return True if listening is active, False otherwise)."""
@@ -180,6 +186,7 @@ class ChatSpammer(QtCore.QObject):
                                           random.randint(0, 0xFFFF),
                                           random.randint(0, 0xFFFF)).upper()
             msg = "PRIVMSG #{channel} :{message}\r\n".format(channel=self.channel, message=code)
+            print("sending code: {}".format(code))
             self.socket.send(msg.encode())
             time.sleep(5)
 
@@ -190,5 +197,6 @@ if(__name__ == "__main__"):
     channel = input("Channel? ")
     bot = ChatSpammer(name, oauth, channel)
     bot.start()
+
     while(bot.isAlive()):
         time.sleep(10)
