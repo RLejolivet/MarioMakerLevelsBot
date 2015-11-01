@@ -1,4 +1,5 @@
-﻿import time
+﻿import sys
+import time
 import socket
 import threading
 
@@ -141,7 +142,7 @@ class ChatListener(QtCore.QObject):
                 else: # Reconnecting didn't work
                     break # Getting out of the loop stops the thread
 
-            print(readbuffer)
+            print(readbuffer.encode(encoding=sys.stdout.encoding, errors='replace').decode())
 
             if(readbuffer == ""): # Didn't receive anything, connection may be closed
                 time.sleep(1) # Waiting a second not to flood with reconnections
