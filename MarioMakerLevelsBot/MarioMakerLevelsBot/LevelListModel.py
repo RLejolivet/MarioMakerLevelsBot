@@ -76,7 +76,7 @@ class Level(object):
         """Return a key function to sort a Level according to the sorting parameter.
         """
         if(sorting & Sorting.NoSorting):
-            return None
+            return (lambda x: 1) # All elements get the same key
 
         if(sorting & Sorting.Date):
             return (lambda x: x.date)
@@ -197,7 +197,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
             self.sorting = Sorting.TimesRequested
 
         if(order == Qt.DescendingOrder):
-            self.sorting &= Sorting.Reversed
+            self.sorting |= Sorting.Reversed
 
         self._reset_view()
 
@@ -401,7 +401,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
         self.view_list = [ level for level in self.levels_dict.values() if self._check_filters(level) ]
 
         # Sorting the view, creating the list of keys, and reversing if needed
-        self.view_list.sort(Level.key(self.sorting))
+        self.view_list.sort(key=Level.key(self.sorting))
         self.view_keys = [Level.key(self.sorting)(x) for x in self.view_list]
         if(self.sorting & Sorting.Reversed):
             self.view_list.reverse()
