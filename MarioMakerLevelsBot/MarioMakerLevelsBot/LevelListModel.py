@@ -1,4 +1,5 @@
 ﻿import enum
+import bisect
 import datetime
 import threading
 
@@ -24,12 +25,13 @@ class Sorting(enum.IntEnum):
     in case multiple sorting options can be selected at the same time.
     """
     NoSorting = 0 # Unlikely but to keep boolean logic
-    AllSorting = 0x1F # Even more unlikely but may be used in bitwise operations maybe
-    Date = 1
-    Code = 2
-    User = 4
-    Priviledges = 8
-    TimesRequested = 16
+    AllSorting = 0x3F # Even more unlikely but may be used in bitwise operations maybe
+    Reversed = 1 # This flag means the sorting is reversed, or in descending order.
+    Date = 2
+    Code = 4
+    User = 8
+    Priviledges = 16
+    TimesRequested = 32
 
 
 class Level(object):
@@ -103,6 +105,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
 
         # Filters on the model
         self.filters = Filters.NoFilter
+        self.sorting = Sorting.Date
 
         # Contains all the submitted levels.
         # Key: level code
@@ -113,6 +116,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
         # Contains all the levels that should be shown to the view
         # The index in this list is the row for the view.
         self.view_list = []
+        self.view_keys = [] # keys for sorting the view
         self.list_lock = threading.RLock() # Prevent access racing on view list
 
     ###########################################################################
@@ -179,9 +183,23 @@ class LevelListModel(QtCore.QAbstractTableModel):
             elif(section == 4):
                 return "Times requested"
 
-    #def sort(column, order=Qt.AscendingOrder):
-    #    """Sort the indexes by column, in order."""
-        #TODO: implement
+    def sort(self, column, order=Qt.AscendingOrder):
+        """Sort the indexes by column, in order."""
+        if(column == 0):
+            self.sorting = Sorting.Date
+        elif(column == 1):
+            self.sorting = Sorting.Code
+        elif(column == 2):
+            self.sorting = Sorting.User
+        elif(column == 3):
+            self.sorting = Sorting.Priviledges
+        elif(column == 4):
+            self.sorting = Sorting.TimesRequested
+
+        if(order == Qt.DescendingOrder):
+            self.sorting &= Sorting.Reversed
+
+        self._reset_view()
 
     def removeRows(self, row, count, parent=QModelIndex()):
         """Removes count rows starting with the given row under parent parent from the model.
@@ -198,6 +216,10 @@ class LevelListModel(QtCore.QAbstractTableModel):
             del self.levels_dict[level.code]
 
         del self.view_list[row:row+count]
+        if(not self.sorting & Sorting.Reversed):
+            del self.view_keys[row:row+count]
+        else:
+            del self.view_keys[len(self.view_keys) - (row + count): len(self.view_keys) - row]
 
         self.endRemoveRows()
 
@@ -334,12 +356,22 @@ class LevelListModel(QtCore.QAbstractTableModel):
     def _add_level_to_view(self, level):
         """Adds the level to the view, at the correct position.
         """
-        index = self._find_level_index(level)
+        key = Level.key(self.sorting)(level)
+        index = bisect.bisect(self.view_keys, key)
+        self.view_keys[index:index] = [key]
+
+        # If sorting is reversed, the key list and view are in different orders
+        if(self.sorting & Sorting.Reversed):
+            index = len(self.view_list) - index
+
 
         self.list_lock.acquire()
+
         self.beginInsertRows(QModelIndex(), index, index)
-        self.view_list.insert(index, level)
+        self.view_list[index:index] = [level]
+
         self.endInsertRows()
+
         self.list_lock.release()
 
     def _toggle_filter(self, filter, toggle):
@@ -364,8 +396,16 @@ class LevelListModel(QtCore.QAbstractTableModel):
         self.list_lock.acquire()
 
         self.beginResetModel()
+
+        # Rebuild view with only items that should show
         self.view_list = [ level for level in self.levels_dict.values() if self._check_filters(level) ]
-        # TODO: sort the list
+
+        # Sorting the view, creating the list of keys, and reversing if needed
+        self.view_list.sort(Level.key(self.sorting))
+        self.view_keys = [Level.key(self.sorting)(x) for x in self.view_list]
+        if(self.sorting & Sorting.Reversed):
+            self.view_list.reverse()
+
         self.endResetModel()
 
         self.list_lock.release()
