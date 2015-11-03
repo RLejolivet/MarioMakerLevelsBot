@@ -4,9 +4,10 @@
 class user_type(enum.IntEnum):
     empty = 0
     mod = 1
-    global_mod = 2
-    admin = 3
-    staff = 4
+    broadcaster = 2
+    global_mod = 3
+    admin = 4
+    staff = 5
 
 
 def user_type__new__(cls, value):
@@ -19,9 +20,12 @@ def user_type__new__(cls, value):
 setattr(user_type, "__new__", user_type__new__)
 
 
-def get_tags(string):
+def get_tags(string, channel=None):
     tags = dict({(x.split("=")[0], x.split("=")[1])
                  for x in string.split(";")})
+
+    if(channel is not None and channel == tags['display-name'].lower()):
+        tags['user-type'] = "broadcaster"
 
     tags['subscriber'] = bool(int(tags['subscriber']))
     tags['turbo'] = bool(int(tags['turbo']))

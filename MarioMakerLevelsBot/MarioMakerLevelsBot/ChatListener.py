@@ -161,7 +161,7 @@ class ChatListener(QtCore.QObject):
                 if(len(line) >= 5 and line[2] == "PRIVMSG"):
                     channel = line[3][1:].lower()
                     name = line[1].split("!")[0][1:].lower()
-                    tags = TwitchTags.get_tags(line[0])
+                    tags = TwitchTags.get_tags(line[0], channel)
                     message = " ".join(line[4:])[1:]
                     for callback in self.callbacks:
                         callback(channel, name, tags, message)
