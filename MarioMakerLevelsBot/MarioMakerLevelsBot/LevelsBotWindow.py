@@ -95,7 +95,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             self.chat_listener = ChatListener.ChatListener(
                 self.twitch_name_lineedit.text(),
                 self.twitch_oauth_lineedit.text(),
-                self.channel_lineedit.text(),
+                map(lambda x: x.strip(), self.channel_lineedit.text().split(",")),
                 self)
 
             self.chat_listener.wrong_password.connect(self.wrong_password_slot)

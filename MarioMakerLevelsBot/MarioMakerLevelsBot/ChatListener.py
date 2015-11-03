@@ -21,13 +21,13 @@ class ChatListener(QtCore.QObject):
     connection_failed = QtCore.Signal()
     connection_successful = QtCore.Signal(str)
 
-    def __init__(self, name, oauth, channel, parent=None):
+    def __init__(self, name, oauth, channels, parent=None):
         """Create the ChatListener object.
         """
         super().__init__()
         self.name = name
         self.oauth = oauth
-        self.channel = channel
+        self.channels = channels
         self.parent = parent
         self.callbacks = []
         self.thread = threading.Thread(target=self._main)
@@ -118,7 +118,9 @@ class ChatListener(QtCore.QObject):
         self.socket.send("CAP REQ :twitch.tv/tags\r\n".encode())
 
         # Joining the channel.
-        self.socket.send("JOIN #{0}\r\n".format(self.channel.lower().replace("#", "")).encode())
+        for channel in self.channels:
+            self.socket.send("JOIN #{0}\r\n".format(channel.lower().replace("#", "")).encode())
+            time.sleep(0.1)
 
         return True
 
