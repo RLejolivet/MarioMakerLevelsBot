@@ -10,8 +10,8 @@ Things left to do:
 
 - Improve the README.md
 
-- Make a setup.py to freeze with cx_freeze
-
 - Make a webpage with images/video (?)
 
 - Add a "select random" button
+
+- Make an icon (?)

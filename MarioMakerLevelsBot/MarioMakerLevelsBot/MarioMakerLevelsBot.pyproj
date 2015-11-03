@@ -32,6 +32,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MarioMakerLevelsBot.py" />
+    <Compile Include="setup.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tests\CodeSpamBot.py">
       <SubType>Code</SubType>
     </Compile>

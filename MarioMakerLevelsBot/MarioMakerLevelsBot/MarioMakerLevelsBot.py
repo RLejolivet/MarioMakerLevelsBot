@@ -1,3 +1,4 @@
+﻿import os
 import sys
 
 def main():
@@ -11,4 +12,10 @@ def main():
     app.exec_()
 
 if(__name__ == "__main__"):
+
+    if getattr(sys,'frozen',False):
+        # if trap for frozen script wrapping
+        sys.path.append(os.path.join(os.path.dirname(sys.executable),'bin'))
+        sys.path.append(os.path.join(os.path.dirname(sys.executable),'bin/library.zip'))
+
     main()
