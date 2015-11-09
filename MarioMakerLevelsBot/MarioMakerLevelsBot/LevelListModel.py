@@ -94,6 +94,16 @@ class Level(object):
         if(sorting & Sorting.TimesRequested):
             return (lambda x: x.times_requested)
 
+class Columns(enum.IntEnum):
+    """Names the columns in the model
+    """
+    Date = 0
+    Code = 1
+    User = 2
+    Tags = 3
+    TimesRequested = 4
+
+
 
 class LevelListModel(QtCore.QAbstractTableModel):
     """The Qt model for the levels list"""
@@ -140,13 +150,13 @@ class LevelListModel(QtCore.QAbstractTableModel):
         if(role == Qt.DisplayRole):
             row = index.row()
             col = index.column()
-            if(col == 0): # Number requested
+            if(col == Columns.Date): # Number requested
                 return "{}".format(row+1) # self.view_list[row].date
-            elif(col == 1): # Code
+            elif(col == Columns.Code): # Code
                 return self.view_list[row].code
-            elif(col == 2): # Name the level was requested by
+            elif(col == Columns.User): # Name the level was requested by
                 return self.view_list[row].name
-            elif(col == 3): # Tags (sub and/or mod)
+            elif(col == Columns.Tags): # Tags (sub and/or mod)
                 tags = self.view_list[row].tags
                 if(tags is None):
                     return ""
@@ -158,7 +168,7 @@ class LevelListModel(QtCore.QAbstractTableModel):
                     return "Mod"
                 else:
                     return ""
-            elif(col == 4): # Number of times requested
+            elif(col == Columns.TimesRequested): # Number of times requested
                 return self.view_list[row].times_requested
 
         elif(role == Qt.TextColorRole):
@@ -172,28 +182,28 @@ class LevelListModel(QtCore.QAbstractTableModel):
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         """Return the data for the row and column headers."""
         if(orientation == Qt.Horizontal and role == Qt.DisplayRole):
-            if(section == 0):
+            if(section == Columns.Date):
                 return "#"
-            elif(section == 1):
+            elif(section == Columns.Code):
                 return "Code"
-            elif(section == 2):
+            elif(section == Columns.User):
                 return "User"
-            elif(section == 3):
+            elif(section == Columns.Tags):
                 return "Privileges"
-            elif(section == 4):
+            elif(section == Columns.TimesRequested):
                 return "Times requested"
 
     def sort(self, column, order=Qt.AscendingOrder):
         """Sort the indexes by column, in order."""
-        if(column == 0):
+        if(column == Columns.Date):
             self.sorting = Sorting.Date
-        elif(column == 1):
+        elif(column == Columns.Code):
             self.sorting = Sorting.Code
-        elif(column == 2):
+        elif(column == Columns.User):
             self.sorting = Sorting.User
-        elif(column == 3):
+        elif(column == Columns.Tags):
             self.sorting = Sorting.Priviledges
-        elif(column == 4):
+        elif(column == Columns.TimesRequested):
             self.sorting = Sorting.TimesRequested
 
         if(order == Qt.DescendingOrder):
