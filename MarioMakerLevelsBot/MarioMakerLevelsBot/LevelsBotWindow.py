@@ -59,7 +59,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.fakes_tableView.setModel(self.fake_list_model)
         self.fakes_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
-        self.delete_saved_button.clicked.connect(functools.partial(self.delete_selected_slot, self.fakes_tableView, self.fake_list_model))
+        self.delete_fake_button.clicked.connect(functools.partial(self.delete_selected_slot, self.fakes_tableView, self.fake_list_model))
 
         # Back to levels list tab with the new models
         
@@ -199,8 +199,9 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         selected_indexes = self.levels_tableView.selectionModel().selectedRows()
 
         for index in selected_indexes:
-            #TODO: get the level info and add it to the new model
-            pass
+            row = index.row()
+            level = self.level_list_model.data(index, LevelListModel.Level)
+            target_model.add_level(level.code, level.name, level.tags)
 
         self.level_list_model.remove_indexes(selected_indexes)
 

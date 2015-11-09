@@ -178,6 +178,10 @@ class LevelListModel(QtCore.QAbstractTableModel):
             elif(self.view_list[row].filters & Filters.PotentiallyFake): # Potentially fake flag is on
                 return QtGui.QColor("orange")
 
+        elif(role == Level):
+            row = index.row()
+            return self.view_list[row]
+
 
     def headerData(self, section, orientation, role=Qt.DisplayRole):
         """Return the data for the row and column headers."""
