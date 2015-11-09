@@ -53,6 +53,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.saved_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         self.delete_saved_button.clicked.connect(functools.partial(self.delete_selected_slot, self.saved_tableView, self.save_list_model))
+        self.reset_saved_button.clicked.connect(self.save_list_model.reset)
 
         # Fake list tab
         self.fake_list_model = LevelListModel.LevelListModel()
@@ -60,6 +61,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.fakes_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
         self.delete_fake_button.clicked.connect(functools.partial(self.delete_selected_slot, self.fakes_tableView, self.fake_list_model))
+        self.reset_fakes_button.clicked.connect(self.fake_list_model.reset)
 
         # Back to levels list tab with the new models
         
