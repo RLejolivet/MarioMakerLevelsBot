@@ -1,4 +1,5 @@
 ﻿import re
+import functools
 
 from PySide import QtCore, QtGui
 from ui.window import Ui_MainWindow
@@ -42,8 +43,28 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.subs_only_checkbox.stateChanged.connect(self.level_list_model.show_subs_levels_only)
         self.mods_only_checkbox.stateChanged.connect(self.level_list_model.show_mods_levels_only)
 
-        self.delete_level_button.clicked.connect(self.delete_selected_levels_slot)
+        self.delete_level_button.clicked.connect(functools.partial(self.delete_selected_slot, self.levels_tableView, self.level_list_model))
         self.reset_levels_button.clicked.connect(self.level_list_model.reset)
+
+        # Saved list tab
+
+        self.save_list_model = LevelListModel.LevelListModel()
+        self.saved_tableView.setModel(self.saved_tableView)
+        self.saved_tableView.horizontalHeader().setResizemode(QtGui.QHeaderView.Stretch)
+
+        self.delete_saved_button.clicked.connect(functools.partial(self.delete_selected_slot, self.saved_tableView, self.save_list_model))
+
+        # Fake list tab
+        self.fake_list_model = LevelListModel.LevelListModel()
+        self.fakes_tableView.setModel(self.saved_tableView)
+        self.fakes_tableView.horizontalHeader().setResizemode(QtGui.QHeaderView.Stretch)
+
+        self.delete_saved_button.clicked.connect(functools.partial(self.delete_selected_slot, self.fakes_tableView, self.fake_list_model))
+
+        # Back to levels list tab with the new models
+        
+        self.save_level_button.clicked.connect(functools.partial(self.move_selected_slot, self.save_list_model))
+        self.fake_level_button.clicked.connect(functools.partial(self.move_selected_slot, self.fake_list_model))
 
 
     ###########################################################################
@@ -172,8 +193,19 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             code = message[s.start(): s.end()].upper().replace(" ", "-").replace("_", "-")
             self.level_list_model.add_level(code, name, tags)
 
-    def delete_selected_levels_slot(self):
-        """Slot for the "delete selected level(s)" button.
+    def move_selected_slot(self, target_model):
+        """Transfer the selected levels in levels model to the target_model
         """
         selected_indexes = self.levels_tableView.selectionModel().selectedRows()
+
+        for index in selected_indexes:
+            #TODO: get the level info and add it to the new model
+            pass
+
         self.level_list_model.remove_indexes(selected_indexes)
+
+    def delete_selected_slot(self, target_view, target_model):
+        """Delete the selected levels in the target model.
+        """
+        selected_indexes = target_view.selectionModel().selectedRows()
+        target_model.remove_indexes(selected_indexes)
