@@ -1,4 +1,5 @@
 ﻿import re
+import random
 import functools
 
 from PySide import QtCore, QtGui
@@ -42,6 +43,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.hide_potentially_checkbox.stateChanged.connect(self.level_list_model.hide_potentially_fake_levels)
         self.subs_only_checkbox.stateChanged.connect(self.level_list_model.show_subs_levels_only)
         self.mods_only_checkbox.stateChanged.connect(self.level_list_model.show_mods_levels_only)
+
+        self.select_random_button.clicked.connect(self.select_random_level)
 
         self.delete_level_button.clicked.connect(functools.partial(self.delete_selected_slot, self.levels_tableView, self.level_list_model))
         self.reset_levels_button.clicked.connect(self.level_list_model.reset)
@@ -197,6 +200,18 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         else:
             code = message[s.start(): s.end()].upper().replace(" ", "-").replace("_", "-")
             self.level_list_model.add_level(code, name, tags)
+
+    def select_random_level(self):
+        """Select a random level in the level view.
+        """
+        self.levels_tableView.clearSelection()
+
+        row_nb = self.level_list_model.rowCount()
+        selection = random.randrange(0, row_nb)
+
+        self.levels_tableView.selectRow(selection)
+        self.levels_tableView.scrollTo(self.levels_tableView.selectedIndexes()[0])
+        self.levels_tableView.setFocus()
 
     def move_selected_slot(self, target_model):
         """Transfer the selected levels in levels model to the target_model
