@@ -67,6 +67,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
         # Back to levels list tab with the new models
         
+        LevelListModel.Level.set_fake_model(self.fake_list_model)
         self.save_level_button.clicked.connect(functools.partial(self.move_selected_slot, self.save_list_model))
         self.fake_level_button.clicked.connect(functools.partial(self.move_selected_slot, self.fake_list_model))
 

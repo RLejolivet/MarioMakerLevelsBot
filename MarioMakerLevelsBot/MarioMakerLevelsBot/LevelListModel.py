@@ -56,7 +56,12 @@ class Level(object):
     def check_filters(self):
         """Check which filters may apply to this Level.
         """
-        # TODO: call check if the level is in the fakes
+        try:
+            if(self.fakes_model.check_code_in_model(self.code)):
+                self.filters |= Filters.Fake
+        except AttributeError: # No fakes model has been set.
+            pass
+
         self.check_potentially_fake()
         self.check_tags()
 
@@ -98,6 +103,12 @@ class Level(object):
 
         if(sorting & Sorting.TimesRequested):
             return (lambda x: x.times_requested)
+
+    @classmethod
+    def set_fake_model(cls, model):
+        """Set a model as containing all the fake levels.
+        """
+        cls.fakes_model = model
 
 class Columns(enum.IntEnum):
     """Names the columns in the model
@@ -360,6 +371,11 @@ class LevelListModel(QtCore.QAbstractTableModel):
         except Exception as e: # Failed to load the model
             print("Failed to load the model from {filename}".format(filename=filename))
             print(e)
+
+    def check_code_in_model(self, code):
+        """Return true if the code is in the model, false otherwise.
+        """
+        return code in self.levels_dict.keys()
 
     ###########################################################################
     # Private methods
