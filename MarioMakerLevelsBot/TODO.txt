@@ -8,6 +8,4 @@ Things left to do:
 
 - Make a webpage with images/video (?)
 
-- Add a "select random" button
-
 - Make an icon (?)
