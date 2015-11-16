@@ -1,4 +1,6 @@
-﻿import re
+﻿
+import os
+import re
 import random
 import functools
 
@@ -16,6 +18,10 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
     def __init__(self):
         super().__init__(None)
         self.setupUi(self)
+
+        # Making sure the "user" dir exists
+        if(not os.path.isdir("user")):
+            os.mkdir("user")
 
         # Settings
         self.settings = QtCore.QSettings("user/settings.ini", QtCore.QSettings.IniFormat, self)
