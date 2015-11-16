@@ -25,7 +25,7 @@ Two extra lists are available: those are not pulled from Twitch chat, but saved 
 
 # How to set-up
 ## Download
-Compiled and ready to run (on Windows) version are available [in the releases](./releases).
+Compiled and ready to run (on Windows) version are available [in the releases](https://github.com/RLejolivet/MarioMakerLevelsBot/releases).
 Alternatively, you may compile the project from source using Python3.4, PySide and cx_freeze.
 
 ## Connecting to Twitch chat
@@ -50,3 +50,8 @@ To create an OAuth token for your account:
 
 That's it! The Bot will remember the OAuth for future sessions.
 **Remember that creating a new OAuth token through the same website invalidates the previous one.**
+
+## Reading chat
+
+Once the bot is connected, it will stay connected for as long as it is open. However, you may not always want to gather codes from the chat.
+On the Levels List tab, you may check "Find codes from chat" when you want to find codes, and uncheck it when you don't to avoid filling the list with too many unwanted levels.
