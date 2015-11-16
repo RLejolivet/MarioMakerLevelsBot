@@ -49,6 +49,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         # Saved list tab
 
         self.save_list_model = LevelListModel.LevelListModel()
+        self.save_list_model.load_model_from_file("user/saved_levels.bin")
         self.saved_tableView.setModel(self.save_list_model)
         self.saved_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
@@ -57,6 +58,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
         # Fake list tab
         self.fake_list_model = LevelListModel.LevelListModel()
+        self.fake_list_model.load_model_from_file("user/fake_levels.bin")
         self.fakes_tableView.setModel(self.fake_list_model)
         self.fakes_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
 
@@ -212,3 +214,13 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         """
         selected_indexes = target_view.selectionModel().selectedRows()
         target_model.remove_indexes(selected_indexes)
+
+    ###########################################################################
+    # Qt standard slots
+    ###########################################################################
+
+    def closeEvent(self, event):
+        """Method called as the program exits.
+        """
+        self.save_list_model.save_model_to_file("user/saved_levels.bin")
+        self.fake_list_model.save_model_to_file("user/fake_levels.bin")
