@@ -1,4 +1,6 @@
-﻿import enum
+﻿
+import enum
+import pickle
 import bisect
 import datetime
 import threading
@@ -47,6 +49,9 @@ class Level(object):
         self.filters = Filters.NoFilter
 
         self.check_filters()
+
+    def __repr__(self):
+        return str(self.__dict__)
 
     def check_filters(self):
         """Check which filters may apply to this Level.
@@ -332,6 +337,29 @@ class LevelListModel(QtCore.QAbstractTableModel):
         # Delete all of them one by one (easy but maybe not the best performance-wise)
         for index, row in enumerate(sorted(selected_rows)):
             self.removeRow(row - index) # The actual target row to be removed decreases by one when a previous is removed
+
+    def save_model_to_file(self, filename):
+        """Save the model's contents to the file given as argument.
+        """
+        with open(filename, "wb") as outfile:
+            self.dict_lock.acquire()
+            pickle.dump(self.levels_dict, outfile)
+            self.dict_lock.release()
+
+    def load_model_from_file(self, filename):
+        """Load the model's contents from the file given as argument.
+        """
+        try:
+            with open(filename, "rb") as infile:
+                self.dict_lock.acquire()
+                self.levels_dict = pickle.load(infile)
+                self.dict_lock.release()
+
+                self._reset_view()
+
+        except Exception as e: # Failed to load the model
+            print("Failed to load the model from {filename}".format(filename=filename))
+            print(e)
 
     ###########################################################################
     # Private methods
