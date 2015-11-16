@@ -46,7 +46,7 @@ To create an OAuth token for your account:
 - Log in to Twitch with the account you want the Bot to use when in chat
 - Go to http://twitchapps.com/tmi/ (recommended by [help.twitch.tv](http://help.twitch.tv/customer/portal/articles/1302780-twitch-irc)) and click "Connect with Twitch"
 - Accept the connexion on the Twitch page that just opened
-- Copy the whole OAuth (e.g. oauth:asdasd234asd234ad234asds23) and paste it in the OAuth line of the Bot
+- Copy the whole OAuth (e.g. *oauth:asdasd234asd234ad234asds23*) and paste it in the OAuth line of the Bot
 
 That's it! The Bot will remember the OAuth for future sessions.
 **Remember that creating a new OAuth token through the same website invalidates the previous one.**
