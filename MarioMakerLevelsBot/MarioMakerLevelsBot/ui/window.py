@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Sun Nov  1 00:39:25 2015
+# Created: Mon Nov 16 22:21:00 2015
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -103,6 +103,13 @@ class Ui_MainWindow(object):
         self.mods_only_checkbox = QtGui.QCheckBox(self.widget_3)
         self.mods_only_checkbox.setObjectName("mods_only_checkbox")
         self.verticalLayout_3.addWidget(self.mods_only_checkbox)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem2)
+        self.select_random_button = QtGui.QPushButton(self.widget_3)
+        self.select_random_button.setObjectName("select_random_button")
+        self.verticalLayout_3.addWidget(self.select_random_button)
+        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem3)
         self.save_level_button = QtGui.QPushButton(self.widget_3)
         self.save_level_button.setObjectName("save_level_button")
         self.verticalLayout_3.addWidget(self.save_level_button)
@@ -112,8 +119,8 @@ class Ui_MainWindow(object):
         self.delete_level_button = QtGui.QPushButton(self.widget_3)
         self.delete_level_button.setObjectName("delete_level_button")
         self.verticalLayout_3.addWidget(self.delete_level_button)
-        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem2)
+        spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem4)
         self.reset_levels_button = QtGui.QPushButton(self.widget_3)
         self.reset_levels_button.setObjectName("reset_levels_button")
         self.verticalLayout_3.addWidget(self.reset_levels_button)
@@ -144,8 +151,8 @@ class Ui_MainWindow(object):
         self.delete_saved_button = QtGui.QPushButton(self.widget_4)
         self.delete_saved_button.setObjectName("delete_saved_button")
         self.verticalLayout_4.addWidget(self.delete_saved_button)
-        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem3)
+        spacerItem5 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem5)
         self.reset_saved_button = QtGui.QPushButton(self.widget_4)
         self.reset_saved_button.setObjectName("reset_saved_button")
         self.verticalLayout_4.addWidget(self.reset_saved_button)
@@ -176,8 +183,8 @@ class Ui_MainWindow(object):
         self.delete_fake_button = QtGui.QPushButton(self.widget_5)
         self.delete_fake_button.setObjectName("delete_fake_button")
         self.verticalLayout_5.addWidget(self.delete_fake_button)
-        spacerItem4 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem4)
+        spacerItem6 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem6)
         self.reset_fakes_button = QtGui.QPushButton(self.widget_5)
         self.reset_fakes_button.setObjectName("reset_fakes_button")
         self.verticalLayout_5.addWidget(self.reset_fakes_button)
@@ -236,6 +243,7 @@ class Ui_MainWindow(object):
         self.hide_potentially_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Hide potentially fakes", None, QtGui.QApplication.UnicodeUTF8))
         self.subs_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from subs only", None, QtGui.QApplication.UnicodeUTF8))
         self.mods_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from mods only", None, QtGui.QApplication.UnicodeUTF8))
+        self.select_random_button.setText(QtGui.QApplication.translate("MainWindow", "Select random", None, QtGui.QApplication.UnicodeUTF8))
         self.save_level_button.setText(QtGui.QApplication.translate("MainWindow", "Add selected level(s) to saved list", None, QtGui.QApplication.UnicodeUTF8))
         self.fake_level_button.setText(QtGui.QApplication.translate("MainWindow", "Add selected level(s) to fakes list", None, QtGui.QApplication.UnicodeUTF8))
         self.delete_level_button.setText(QtGui.QApplication.translate("MainWindow", "Delete selected level(s)", None, QtGui.QApplication.UnicodeUTF8))

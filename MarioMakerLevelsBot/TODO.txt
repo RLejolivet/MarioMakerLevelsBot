@@ -2,8 +2,6 @@ Things left to do:
 
 - Make the window remember various settings (checkbox states, size)
 
-- Check if a level is in the fake list when creating it (new "add fakes model" to the model)
-
 - Allow channel change if hitting "connecting" again
 
 - Improve the README.md
