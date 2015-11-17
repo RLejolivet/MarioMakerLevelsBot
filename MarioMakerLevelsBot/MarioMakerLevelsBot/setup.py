@@ -11,7 +11,7 @@ exe = Executable(
     copyDependentFiles=True,
     appendScriptToExe=True,
     appendScriptToLibrary=False,
-    icon=None, # TODO: add an icon?
+    icon="ui/MarioMakerLevelsBot.ico", # TODO: add an icon?
     )
 
 setup(
