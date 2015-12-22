@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'window.ui'
 #
-# Created: Tue Nov 17 00:43:55 2015
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created: Tue Dec 22 17:18:58 2015
+#      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -48,6 +48,7 @@ class Ui_MainWindow(object):
         self.widget_2 = QtGui.QWidget(self.groupBox)
         self.widget_2.setObjectName("widget_2")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.widget_2)
+        self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_3 = QtGui.QLabel(self.widget_2)
@@ -108,6 +109,9 @@ class Ui_MainWindow(object):
         self.select_random_button = QtGui.QPushButton(self.widget_3)
         self.select_random_button.setObjectName("select_random_button")
         self.verticalLayout_3.addWidget(self.select_random_button)
+        self.open_in_brower_button = QtGui.QPushButton(self.widget_3)
+        self.open_in_brower_button.setObjectName("open_in_brower_button")
+        self.verticalLayout_3.addWidget(self.open_in_brower_button)
         spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.verticalLayout_3.addItem(spacerItem3)
         self.save_level_button = QtGui.QPushButton(self.widget_3)
@@ -244,6 +248,7 @@ class Ui_MainWindow(object):
         self.subs_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from subs only", None, QtGui.QApplication.UnicodeUTF8))
         self.mods_only_checkbox.setText(QtGui.QApplication.translate("MainWindow", "Show levels from mods only", None, QtGui.QApplication.UnicodeUTF8))
         self.select_random_button.setText(QtGui.QApplication.translate("MainWindow", "Select random", None, QtGui.QApplication.UnicodeUTF8))
+        self.open_in_brower_button.setText(QtGui.QApplication.translate("MainWindow", "Open level in browser", None, QtGui.QApplication.UnicodeUTF8))
         self.save_level_button.setText(QtGui.QApplication.translate("MainWindow", "Add selected level(s) to saved list", None, QtGui.QApplication.UnicodeUTF8))
         self.fake_level_button.setText(QtGui.QApplication.translate("MainWindow", "Add selected level(s) to fakes list", None, QtGui.QApplication.UnicodeUTF8))
         self.delete_level_button.setText(QtGui.QApplication.translate("MainWindow", "Delete selected level(s)", None, QtGui.QApplication.UnicodeUTF8))

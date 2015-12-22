@@ -64,16 +64,7 @@
            <item row="1" column="0">
             <widget class="QWidget" name="widget_2" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
+              <property name="margin">
                <number>0</number>
               </property>
               <item>
@@ -211,6 +202,13 @@
             <widget class="QPushButton" name="select_random_button">
              <property name="text">
               <string>Select random</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="open_in_brower_button">
+             <property name="text">
+              <string>Open level in browser</string>
              </property>
             </widget>
            </item>

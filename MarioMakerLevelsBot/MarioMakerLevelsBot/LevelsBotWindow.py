@@ -10,11 +10,11 @@ from ui.window import Ui_MainWindow
 import ChatListener
 import LevelListModel
 
+
 class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
     """The QMainWindow class for the Mario Maker Levels Bot, 
     containing all the UI logic."""
 
-    
     def __init__(self):
         super().__init__(None)
         self.setupUi(self)
@@ -24,10 +24,14 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             os.mkdir("user")
 
         # Settings
-        self.settings = QtCore.QSettings("user/settings.ini", QtCore.QSettings.IniFormat, self)
-        self.channel_lineedit.setText(self.settings.value("irc_info/channel", ""))
-        self.twitch_name_lineedit.setText(self.settings.value("irc_info/nick", ""))
-        self.twitch_oauth_lineedit.setText(self.settings.value("irc_info/oauth", ""))
+        self.settings = QtCore.QSettings(
+            "user/settings.ini", QtCore.QSettings.IniFormat, self)
+        self.channel_lineedit.setText(
+            self.settings.value("irc_info/channel", ""))
+        self.twitch_name_lineedit.setText(
+            self.settings.value("irc_info/nick", ""))
+        self.twitch_oauth_lineedit.setText(
+            self.settings.value("irc_info/oauth", ""))
 
         # Menu bar
         self.actionAbout.triggered.connect(self.about)
@@ -42,17 +46,23 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
 
         self.level_list_model = LevelListModel.LevelListModel()
         self.levels_tableView.setModel(self.level_list_model)
-        self.levels_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.levels_tableView.horizontalHeader().setResizeMode(
+            QtGui.QHeaderView.Stretch)
 
         self.find_codes_checkbox.stateChanged.connect(self.toggle_check_codes)
-        self.hide_likely_fakes_checkbox.stateChanged.connect(self.level_list_model.hide_fake_levels)
-        self.hide_potentially_checkbox.stateChanged.connect(self.level_list_model.hide_potentially_fake_levels)
-        self.subs_only_checkbox.stateChanged.connect(self.level_list_model.show_subs_levels_only)
-        self.mods_only_checkbox.stateChanged.connect(self.level_list_model.show_mods_levels_only)
+        self.hide_likely_fakes_checkbox.stateChanged.connect(
+            self.level_list_model.hide_fake_levels)
+        self.hide_potentially_checkbox.stateChanged.connect(
+            self.level_list_model.hide_potentially_fake_levels)
+        self.subs_only_checkbox.stateChanged.connect(
+            self.level_list_model.show_subs_levels_only)
+        self.mods_only_checkbox.stateChanged.connect(
+            self.level_list_model.show_mods_levels_only)
 
         self.select_random_button.clicked.connect(self.select_random_level)
 
-        self.delete_level_button.clicked.connect(functools.partial(self.delete_selected_slot, self.levels_tableView, self.level_list_model))
+        self.delete_level_button.clicked.connect(functools.partial(
+            self.delete_selected_slot, self.levels_tableView, self.level_list_model))
         self.reset_levels_button.clicked.connect(self.level_list_model.reset)
 
         # Saved list tab
@@ -60,26 +70,31 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         self.save_list_model = LevelListModel.LevelListModel()
         self.save_list_model.load_model_from_file("user/saved_levels.bin")
         self.saved_tableView.setModel(self.save_list_model)
-        self.saved_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.saved_tableView.horizontalHeader().setResizeMode(
+            QtGui.QHeaderView.Stretch)
 
-        self.delete_saved_button.clicked.connect(functools.partial(self.delete_selected_slot, self.saved_tableView, self.save_list_model))
+        self.delete_saved_button.clicked.connect(functools.partial(
+            self.delete_selected_slot, self.saved_tableView, self.save_list_model))
         self.reset_saved_button.clicked.connect(self.save_list_model.reset)
 
         # Fake list tab
         self.fake_list_model = LevelListModel.LevelListModel()
         self.fake_list_model.load_model_from_file("user/fake_levels.bin")
         self.fakes_tableView.setModel(self.fake_list_model)
-        self.fakes_tableView.horizontalHeader().setResizeMode(QtGui.QHeaderView.Stretch)
+        self.fakes_tableView.horizontalHeader().setResizeMode(
+            QtGui.QHeaderView.Stretch)
 
-        self.delete_fake_button.clicked.connect(functools.partial(self.delete_selected_slot, self.fakes_tableView, self.fake_list_model))
+        self.delete_fake_button.clicked.connect(functools.partial(
+            self.delete_selected_slot, self.fakes_tableView, self.fake_list_model))
         self.reset_fakes_button.clicked.connect(self.fake_list_model.reset)
 
         # Back to levels list tab with the new models
-        
-        LevelListModel.Level.set_fake_model(self.fake_list_model)
-        self.save_level_button.clicked.connect(functools.partial(self.move_selected_slot, self.save_list_model))
-        self.fake_level_button.clicked.connect(functools.partial(self.move_selected_slot, self.fake_list_model))
 
+        LevelListModel.Level.set_fake_model(self.fake_list_model)
+        self.save_level_button.clicked.connect(
+            functools.partial(self.move_selected_slot, self.save_list_model))
+        self.fake_level_button.clicked.connect(
+            functools.partial(self.move_selected_slot, self.fake_list_model))
 
     ###########################################################################
     # Menu bar
@@ -100,7 +115,6 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             "twitch.tv/laraeph\n"
             "twitter.com/LaraephFR\n"
             "laraephddo@gmail.com\n")
-
 
     ###########################################################################
     # IRC info tab
@@ -130,12 +144,15 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             self.chat_listener = ChatListener.ChatListener(
                 self.twitch_name_lineedit.text(),
                 self.twitch_oauth_lineedit.text(),
-                map(lambda x: x.strip(), self.channel_lineedit.text().split(",")),
+                map(lambda x: x.strip(),
+                    self.channel_lineedit.text().split(",")),
                 self)
 
             self.chat_listener.wrong_password.connect(self.wrong_password_slot)
-            self.chat_listener.connection_failed.connect(self.connection_failed_slot)
-            self.chat_listener.connection_successful.connect(self.connection_successful_slot)
+            self.chat_listener.connection_failed.connect(
+                self.connection_failed_slot)
+            self.chat_listener.connection_successful.connect(
+                self.connection_successful_slot)
 
             self.chat_listener.start()
 
@@ -147,7 +164,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             "Unable to connect to Twitch chat",
             "Unable to connect to Twitch chat\n"
             "Invalid Name/Password (OAuth) combination."""
-            )
+        )
 
     def connection_failed_slot(self):
         """Slot connected to the "connection failed signal that may be emitted by the ChatListener."
@@ -157,18 +174,22 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             "Unable to connect to Twitch chat",
             "Unable to connect to Twitch chat\n"
             "Make sure your internet connection doesn't restrict IRC."
-            )
+        )
 
     def connection_successful_slot(self, channel):
         """Slot connected to the "connection successful that may be emitted by the ChatListener.
-        
+
         Display a message confirming the connection as status bar not to force an extra click,
         and save the information for later.
         """
-        self.statusbar.showMessage("Successfully connected to channel {}".format(channel))
-        self.settings.setValue("irc_info/channel", self.channel_lineedit.text())
-        self.settings.setValue("irc_info/nick", self.twitch_name_lineedit.text())
-        self.settings.setValue("irc_info/oauth", self.twitch_oauth_lineedit.text())
+        self.statusbar.showMessage(
+            "Successfully connected to channel {}".format(channel))
+        self.settings.setValue(
+            "irc_info/channel", self.channel_lineedit.text())
+        self.settings.setValue(
+            "irc_info/nick", self.twitch_name_lineedit.text())
+        self.settings.setValue(
+            "irc_info/oauth", self.twitch_oauth_lineedit.text())
 
     ###########################################################################
     # Levels list tab
@@ -186,15 +207,17 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
                     "Not connected to Twitch chat",
                     "The bot is currently not connected to Twitch chat.\n"
                     "Head to the Twitch chat info tab to connect."
-                    )
+                )
                 self.find_codes_checkbox.setCheckState(QtCore.Qt.Unchecked)
 
         else:
             if(self.chat_listener is not None):
                 self.chat_listener.remove_callback(self.parse_message)
 
-    # RegExp used to find codes. Pre-compiled to go faster when receiving messages.
-    code_re = re.compile("[0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}")
+    # RegExp used to find codes. Pre-compiled to go faster when receiving
+    # messages.
+    code_re = re.compile(
+        "[0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}[ \-_][0-9A-F]{4}")
 
     def parse_message(self, channel, name, tags, message):
         """Parse a message read from chat. This is the callback for the ChatListener.
@@ -204,7 +227,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         if(s is None):
             return
         else:
-            code = message[s.start(): s.end()].upper().replace(" ", "-").replace("_", "-")
+            code = message[s.start(): s.end()].upper().replace(
+                " ", "-").replace("_", "-")
             self.level_list_model.add_level(code, name, tags)
 
     def select_random_level(self):
@@ -216,20 +240,36 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         selection = random.randrange(0, row_nb)
 
         self.levels_tableView.selectRow(selection)
-        self.levels_tableView.scrollTo(self.levels_tableView.selectedIndexes()[0])
+        self.levels_tableView.scrollTo(
+            self.levels_tableView.selectedIndexes()[0])
         self.levels_tableView.setFocus()
+
+    def open_code_in_browser(self):
+        """Open all the selected codes in a browser, to check if they are real.
+        """
+        selected_indexes = self.levels_tableView.selectionModel(
+        ).selectedRows()
+
+        for index in selected_indexes:
+            code = self.level_list_model.data(index, LevelListModel.Level).code
+            QtGui.QDesktopServices.openUrl(
+                "https://supermariomakerbookmark.nintendo.net/courses/{}".format(code))
 
     def move_selected_slot(self, target_model):
         """Transfer the selected levels in levels model to the target_model
         """
-        selected_indexes = self.levels_tableView.selectionModel().selectedRows()
+        selected_indexes = self.levels_tableView.selectionModel(
+        ).selectedRows()
 
         for index in selected_indexes:
-            row = index.row()
             level = self.level_list_model.data(index, LevelListModel.Level)
             target_model.add_level(level.code, level.name, level.tags)
 
         self.level_list_model.remove_indexes(selected_indexes)
+
+    ###########################################################################
+    # Any list tab
+    ###########################################################################
 
     def delete_selected_slot(self, target_view, target_model):
         """Delete the selected levels in the target model.
