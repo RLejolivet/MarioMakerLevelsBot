@@ -60,6 +60,7 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
             self.level_list_model.show_mods_levels_only)
 
         self.select_random_button.clicked.connect(self.select_random_level)
+        self.open_in_brower_button.clicked.connect(self.open_code_in_browser)
 
         self.delete_level_button.clicked.connect(functools.partial(
             self.delete_selected_slot, self.levels_tableView, self.level_list_model))
@@ -253,7 +254,8 @@ class LevelsBotWindow(Ui_MainWindow, QtGui.QMainWindow):
         for index in selected_indexes:
             code = self.level_list_model.data(index, LevelListModel.Level).code
             QtGui.QDesktopServices.openUrl(
-                "https://supermariomakerbookmark.nintendo.net/courses/{}".format(code))
+                "https://supermariomakerbookmark.nintendo.net/courses/"
+                "{!s}".format(code))
 
     def move_selected_slot(self, target_model):
         """Transfer the selected levels in levels model to the target_model
